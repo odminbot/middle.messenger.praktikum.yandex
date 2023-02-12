@@ -1,0 +1,30 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+
+  label {
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 9px;
+    color: $color_text_light;
+    margin-bottom: 8px;
+  }
+
+  input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid $color_link_button_default;
+    padding-bottom: 7px;
+    margin-bottom: 4px;
+
+    &:focus {
+      border-bottom: 1px solid $color_link_button_active;
+    }
+  }
+
+  .error-message {
+    color: $color_link_button_active;
+  }
+}

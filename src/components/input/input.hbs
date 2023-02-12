@@ -1,0 +1,14 @@
+<div class="input-container">
+    <label>{{label}}</label>
+    <input type="{{type}}"
+           name="{{name}}" 
+           label="{{label}}" 
+           value="{{value}}"
+    {{#if color-class}}
+        class="{{color-class}}"
+    {{/if}}
+    >
+    {{#if error-message}}
+        <label class="error-message">{{error-message}}</label>
+    {{/if}}
+</div>

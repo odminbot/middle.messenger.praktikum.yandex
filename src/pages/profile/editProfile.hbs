@@ -1,0 +1,49 @@
+---
+title: Изменить данные пользователя
+styles:
+  - '../../layouts/base.scss'
+profile:
+    - name: 'email' 
+      type: 'email' 
+      label: 'Почта'
+      value: 'pochta@yandex.ru'
+    - name: 'login' 
+      type: 'text' 
+      label: 'Логин'
+      value: 'ivanivanov'
+    - name: 'first_name' 
+      type: 'text' 
+      label: 'Имя'
+      value: 'Иван'
+    - name: 'second_name' 
+      type: 'text' 
+      label: 'Фамилия'
+      value: 'Иванов'
+    - name: 'chat_name' 
+      type: 'text' 
+      label: 'Имя в чате'
+      value: 'Иван'
+    - name: 'phone' 
+      type: 'tel' 
+      label: 'Телефон'
+      value: '+7(090) 111 11 11'
+---
+{{!< base}}
+
+<div class="profile-container">
+    {{> "backButton/backButton"}}
+    <div class="profile-container_wrapper">
+        <div class="profile-container_user">
+            <div class="profile-container_user-pic">
+            </div>
+        </div>
+        <ul class="profile-container_user-items">
+            {{#each profile}}
+                {{> "userItem/userItemEdit"}}
+            {{/each}}
+        </ul>
+        <div class="profile-container_button">
+            {{> "button/button" value="Сохранить"}}
+        </div>
+    </div>
+</div>
