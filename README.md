@@ -1,8 +1,8 @@
-# Chat Messanger
+# Chat Messenger
     Simple chat app (educational project) 
 
 
-## Run project in develop mode
+## Run project in dev mode
     Run commands:
         1) npm install
         2) npm run dev
