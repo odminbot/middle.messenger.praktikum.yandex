@@ -1,0 +1,43 @@
+// Main
+@import 'normalize';
+@import 'variables';
+@import 'reset';
+
+// Components
+@import '../components/backButton/backButton.scss';
+@import '../components/button/button.scss';
+@import '../components/input/input.scss';
+@import '../components/linkButton/linkButton.scss';
+@import '../components/userItem/userItem.scss';
+
+// Pages
+@import '../pages/auth/auth.scss';
+@import '../pages/errors/errors.scss';
+@import '../pages/profile/profile.scss';
+@import '../pages/chat/chat.scss';
+@import '../pages/index.scss';
+
+body {
+  display: block;
+  margin: 0;
+  font-family: 'Inter', Tahoma, Arial, sans-serif;
+  font-size: 14px;
+  color: $color_text_main;
+  background: $color_background_main;
+  box-sizing: border-box;
+  min-width:320px;
+}
+  
+main {
+  height: 100vh;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.color_active {
+  color: $color_link_button_active;
+}

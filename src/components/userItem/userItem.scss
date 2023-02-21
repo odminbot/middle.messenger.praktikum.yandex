@@ -1,0 +1,30 @@
+.settings-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid $color_separation_line;
+
+  &:last-child {
+    border-bottom: 1px solid $color_background_main;
+  }
+}
+
+.settings-item_name {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.settings-item_value {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: $color_text_light;
+}
+
+input {
+  text-align: right;
+  border: 0;
+  color: $color_text_light;
+} 

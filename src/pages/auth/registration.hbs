@@ -1,0 +1,55 @@
+---
+title: Форма регистрации в чате
+styles:
+  - '../../layouts/base.scss'
+form-fields:
+    - name: 'email' 
+      type: 'email' 
+      label: 'Почта'
+      value: 'pochta@yandex.ru'
+    - name: 'login' 
+      type: 'text' 
+      label: 'Логин'
+      value: 'ivanivanov'
+    - name: 'first_name' 
+      type: 'text' 
+      label: 'Имя'
+      value: 'Иван'
+    - name: 'second_name' 
+      type: 'text' 
+      label: 'Фамилия'
+      value: 'Иванов'
+    - name: 'phone' 
+      type: 'tel' 
+      label: 'Телефон'
+      value: '+7(090) 111 11 11'
+    - name: 'password' 
+      type: 'password' 
+      label: 'Пароль'
+      value: '••••••••••••'
+      color-class: 'color-active'
+    - name: 'repeat_password' 
+      type: 'password' 
+      label: 'Пароль (ещё раз)'
+      value: '••••••••••••'
+      color-class: 'color-active'
+      error-message: 'Пароли не совпадают'
+---
+
+{{!< base}}
+
+<div class="auth-container">
+    <form class="auth-container_form">
+        <h1 class="auth-header">Регистрация</h1>
+        <div class="auth-container_inputs-reg">
+            {{#each form-fields}}
+                {{> "input/input"}}
+            {{/each}}
+        </div>
+        <div class="auth-container_button">
+            {{> "button/button"
+                value="Registration"
+            }}
+        </div>
+    </form>
+</div>
