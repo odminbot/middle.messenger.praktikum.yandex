@@ -2,10 +2,56 @@
 title: 'Чат'
 styles:
   - '../../layouts/base.scss'
+chat-name: Иван 
+chat-items:
+  - title: 'Андрей'
+    message: 'Изображение'
+    time: '10:49'
+    counter: 2
+  - title: 'Киноклуб'
+    message: 'Вы: стикер'
+    time: '12:00'
+    counter: 0
+  - title: 'Илья'
+    message: 'Друзья, у меня для вас особенный выпуск новостей!...'
+    time: '15:12'
+    counter: 4
+  - title: 'Вадим'
+    message: 'Вы: Круто!'
+    time: 'Пт'
+    counter: 0
+  - title: 'тет-теты'
+    message: 'И Human Interface Guidelines и Material Design рекомендуют...'
+    time: 'Ср'
+    counter: 0    
 ---
 
 {{!< base}} 
 
 <div class="chat">
-  <h1>Тут будет список чатов и лента переписки</h1>
+  <section class="chat_block">
+    <a class="chat_profile-link" href="../profile/profile.hbs">Профиль ></a>
+    <input type="text" class="chat_search" placeholder="Поиск">
+    <ul class="chat_list">
+        {{#each chat-items}}
+            {{> "chatItem/chatItem"}}
+        {{/each}}
+    </ul>
+  </section>
+  <section class="chat_core">
+    <div class="chat_header">
+      <div class="chat_avatar"></div>
+      <h2 class="chat_name">{{chat-name}}</h2>
+      <button type="button" class="chat_menu-button"></button>
+    </div>
+    <div class="chat_messages">
+     Сообщения выбранного чата
+    </div>
+    <div class="chat_input-block">
+      <button class="chat_attach-button"></button>
+      <input type="text" class="chat_message" placeholder="Сообщение">
+      <button class="chat_send-button" type="button"></button>
+    </div>
+  </section>
 </div>
+
