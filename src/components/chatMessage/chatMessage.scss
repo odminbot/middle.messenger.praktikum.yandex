@@ -1,34 +1,33 @@
 @import '../../styles/variables';
 
-.messageIn {
+.message-in {
     max-width: 402px;
    
-    .message_text {
-        border-radius: 0 10px 10px 10px;
+    .message-text {
+        padding: 5px 10px;
+        text-align: left;
+        border-radius: 0 10px 10px;
         background-color: $color_message;
     }
 }
 
-.messageOut {
+.message-out {
     max-width: 402px;
 
-    .message_text {
-        border-radius: 10px 10px 0 10px;
+    .message-text {
+        padding: 5px 10px;
+        text-align: left;
+        border-radius: 10px 10px 0;
         background-color: $color_message_background_chat_select;
    }
 }
 
-.message_text {
-   padding: 5px 10px 5px 10px;
-   text-align: left;
-}
-
-.message_date {
-   margin: 20px 0 20px 0;
+.message-date {
+   margin: 20px 0;
    color: $color_text_light;
 }
        
-.message_time {
+.message-time {
     text-align: right;
     margin: 0 10px 0 0;
     font-size: 9px;

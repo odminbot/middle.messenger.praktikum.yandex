@@ -41,7 +41,7 @@
     padding: 9px 10px;
     border: none;
     border-radius: 5px;
-    background: url(../../images/search.svg) calc(50% - 30px) no-repeat;
+    background: url("../../images/search.svg") calc(50% - 30px) no-repeat;
     background-color: $color_field;
     text-align: center;
     margin-bottom: 14px;
@@ -101,7 +101,7 @@
     height: 25px;
     border-radius: 50%;
     border: none;
-    background: url(../../images/points.svg) center no-repeat;
+    background: url("../../images/points.svg") center no-repeat;
     cursor: pointer;
 
     &:hover {
@@ -121,7 +121,7 @@
     width: 32px;
     height: 32px;
     border: none;
-    background: url(../../images/attach.svg) center / contain no-repeat;
+    background: url("../../images/attach.svg") center / contain no-repeat;
     cursor: pointer;
     border-radius: 50%;
 
@@ -134,7 +134,7 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: url(../../images/arrow-right.svg) center / 60% no-repeat;
+    background: url("../../images/arrow-right.svg") center / 60% no-repeat;
     background-color: $color_link_button_default;
     border: none;
     cursor: pointer;
@@ -145,7 +145,6 @@
   }
 
   &_messages {
-    font-size: 14px;
     justify-content: center;
     text-align: center;
     align-items: center;
