@@ -8,52 +8,41 @@ import { Error404 } from './pages/errors/404';
 import { Error500 } from './pages/errors/500';
 import { renderDom } from './utils/renderDom';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const loginPage = new LoginPage();
-  const registrationPage = new RegistrationPage();
-  const profilePage = new ProfilePage();
-  const profileEditPasswordPage = new ProfileEditPasswordPage();
-  const profileEditUserPage = new ProfileEditUserPage();
-  const chatPage = new ChatPage();
-  const error500Page = new Error500();
-  const error404Page = new Error404();
+window.addEventListener('DOMContentLoaded', () => {
 
-  const path: string = document.location.pathname;
+  let page = new LoginPage();
+  const path: string = window.location.pathname;
 
   switch (path) {
     case '/':
-      renderDom('#app', loginPage);
+      page = new LoginPage();
       break;
     case '/registration':
-      renderDom('#app', registrationPage);
+      page = new RegistrationPage();
       break;
     case '/profile':
-      renderDom('#app', profilePage);
+      page = new ProfilePage();
       break;
     case '/profile/edit/password':
-      renderDom('#app', profileEditPasswordPage);
+      page = new ProfileEditPasswordPage();
       break;
     case '/profile/edit/user':
-      renderDom('#app', profileEditUserPage);
+      page = new ProfileEditUserPage();
       break;
     case '/chat':
-      renderDom('#app', chatPage);
+      page = new ChatPage();
       break;
     case '/500':
-      renderDom('#app', error500Page);
+      page = new Error500();
       break;
     case '/404':
-      renderDom('#app', error404Page);
+      page = new Error404();
       break;
     default:
-      renderDom('#app', error404Page);
+      page = new Error404();
       break;
   }
 
-  loginPage.dispatchComponentDidMount();
-  registrationPage.dispatchComponentDidMount();
-  profilePage.dispatchComponentDidMount();
-  profileEditPasswordPage.dispatchComponentDidMount();
-  profileEditUserPage.dispatchComponentDidMount();
-  chatPage.dispatchComponentDidMount();
+  page.dispatchComponentDidMount();
+  renderDom('#app', page);
 });
