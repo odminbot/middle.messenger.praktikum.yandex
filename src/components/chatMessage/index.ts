@@ -3,7 +3,7 @@ import template from './chatMessage.hbs';
 import styles from './chatMessage.scss';
 
 interface Props {
-    class: string,
+  class: string,
   date: string,
   text: string,
   time: string,
