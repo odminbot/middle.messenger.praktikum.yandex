@@ -1,6 +1,6 @@
-import { Block } from "../../utils/Block";
-import template from "./linkButton.hbs";
-import styles from "./linkButton.scss";
+import { Block } from '../../utils/Block';
+import template from './linkButton.hbs';
+import styles from './linkButton.scss';
 
 interface LinkProps {
   colorClass?: string;
@@ -13,8 +13,7 @@ export class LinkButton extends Block {
     super(props);
   }
 
-render() {
+  render() {
     return this.compile(template, { ...this.props, styles });
   }
 }
-  

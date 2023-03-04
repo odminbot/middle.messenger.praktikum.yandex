@@ -1,12 +1,12 @@
-import { Block } from "../../utils/Block";
-import template from "./chatItem.hbs";
-import styles from "./chatItem.scss";
+import { Block } from '../../utils/Block';
+import template from './chatItem.hbs';
+import styles from './chatItem.scss';
 
 interface Props {
   title: string,
   message: string,
   time: string,
-  counter: number, 
+  counter: number,
 }
 
 export class ChatItem extends Block {
@@ -14,8 +14,7 @@ export class ChatItem extends Block {
     super(props);
   }
 
-render() {
+  render() {
     return this.compile(template, { ...this.props, styles });
   }
 }
-  

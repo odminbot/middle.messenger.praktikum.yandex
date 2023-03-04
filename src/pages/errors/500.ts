@@ -1,7 +1,7 @@
 import template from './errors.hbs';
 import { Block } from '../../utils/Block';
-import { LinkButton } from "../../components/linkButton";
-import { ErrorPage } from "../../components/error";
+import { LinkButton } from '../../components/linkButton';
+import { ErrorPage } from '../../components/error';
 
 export class Error500 extends Block {
   constructor() {
@@ -13,9 +13,9 @@ export class Error500 extends Block {
       error: '500',
       message: 'Мы уже фиксим',
       linkButton: new LinkButton({
-        colorClass: "color-default",
-        anchor: "Назад к чатам",
-        href: "/chat",
+        colorClass: 'color-default',
+        anchor: 'Назад к чатам',
+        href: '/chat',
       }),
     });
   }

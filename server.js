@@ -6,6 +6,6 @@ const HOSTNAME = process.env.HOSTNAME || 'localhost';
 
 app.use(express.static(`${__dirname}/dist/`));
 
-app.listen(PORT, function () {
+app.listen(PORT, () => {
   console.log(`Start web server on http://${HOSTNAME}:${PORT}`);
 });

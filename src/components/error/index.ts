@@ -1,4 +1,4 @@
-import styles from "./error.scss";
+import styles from './error.scss';
 import template from './error.hbs';
 import { Block } from '../../utils/Block';
 
