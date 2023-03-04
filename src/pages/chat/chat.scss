@@ -111,7 +111,7 @@
 
   &_input-block {
     display: flex;
-    padding: 11px 0;
+    padding: 10px 0;
     border-top: 1px solid $color_separation_line;
     justify-content: space-between;
     column-gap: 10px;
@@ -127,22 +127,6 @@
 
     &:hover {
       background-color: $color_field;
-    }
-  }
-
-  &_message input {
-    flex-grow: 1;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 12px;
-    padding: 2px 20px;
-    border-radius: 30px;
-    border: none;
-    background-color: $color_field;
-    text-align: left;
-
-    &:focus {
-      outline: 1px solid $color_link_button_default;
     }
   }
 
@@ -170,4 +154,14 @@
     font-size: 12px;
     flex-grow: 1;
   }
+
+  label {
+    line-height: 30px;
+  }
+
+  .error {
+    font-size: 12px;
+    color: $color_link_button_active;
+  }
+
 }

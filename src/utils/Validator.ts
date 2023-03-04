@@ -58,6 +58,8 @@ interface IvPattern {
     } else {
       error!.textContent = rulesForFields[target.name].message;
     }
+
+    console.log('validate');
   };
   
   const focusin = (event: Event): void => {

@@ -17,7 +17,7 @@ export class Input extends Block {
     constructor(props: InputProps) {
       super(props);
     }
-  
+
     render() {
       return this.compile(template, { ...this.props, styles });
     }

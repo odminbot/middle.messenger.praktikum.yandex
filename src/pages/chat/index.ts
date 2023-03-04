@@ -3,9 +3,9 @@ import template from "./chat.hbs";
 import { Block } from "../../utils/Block";
 import { ChatItem } from "../../components/chatItem";
 import { ChatMessage } from "../../components/chatMessage";
-import { Input } from "../../components/input";
+import { ChatInput } from "../../components/chatInput";
 import { Button } from "../../components/button";
-import { focusin, focusout, submit } from '../../utils/Validator';
+import { focusin, focusout } from '../../utils/Validator';
 
 export class ChatPage extends Block {
   constructor() {
@@ -88,11 +88,7 @@ export class ChatPage extends Block {
         );
     }
 
-    this.children.inputMessage = new Input({
-      name: "message",
-      placeholder: "Сообщение",
-      type: "text",
-      class: "chat_message",
+    this.children.inputMessage = new ChatInput({
       events: {
         focusin,
         focusout,
@@ -112,9 +108,8 @@ export class ChatPage extends Block {
   }
 
   sendMessage() {
-    const input = document.getElementsByTagName('input');
-    const userMessage = (this.children.inputMessage as HTMLInputElement).getValue()
-    console.log(userMessage)
+    const userMessage = (this.children.inputMessage as ChatInput).getValue();
+    console.log(userMessage);
   }
   
   render() {

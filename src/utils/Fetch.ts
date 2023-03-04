@@ -14,6 +14,7 @@ type HTTPMethod = (url: string, options?: Options) => Promise<XMLHttpRequest>
 function queryStringify(data: Record<string, any>) {
   return Object.entries(data).map(([key, value]) => key + '=' + value).join('&');
 }
+
 export default class HTTPTransport {
   get: HTTPMethod = (url, options = { method: Method.Get }) => {
     if (options.data) {
