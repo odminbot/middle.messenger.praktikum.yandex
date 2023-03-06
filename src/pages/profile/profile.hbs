@@ -1,63 +1,33 @@
----
-title: Настройки профиля в чате
-styles:
-  - '../../layouts/base.scss'
-profile:
-    - name: 'email' 
-      type: 'email' 
-      label: 'Почта'
-      value: 'pochta@yandex.ru'
-    - name: 'login' 
-      type: 'text' 
-      label: 'Логин'
-      value: 'ivanivanov'
-    - name: 'first_name' 
-      type: 'text' 
-      label: 'Имя'
-      value: 'Иван'
-    - name: 'second_name' 
-      type: 'text' 
-      label: 'Фамилия'
-      value: 'Иванов'
-    - name: 'display_name' 
-      type: 'text' 
-      label: 'Имя в чате'
-      value: 'Иван'
-    - name: 'phone' 
-      type: 'tel' 
-      label: 'Телефон'
-      value: '+7(090) 111 11 11'
-links:
-    - anchor: 'Изменить данные'
-      href: './editProfile.hbs'
-    - anchor: 'Изменить пароль'
-      href: './editPassword.hbs'
-    - anchor: 'Выйти'
-      color-class: 'color-active'
----
-{{!< base}}
-
 <div class="profile-container">
-    {{> "backButton/backButton"}}
+    <div class="back-button">
+        <button class="send-button" onclick="history.back()"></button>
+    </div>
     <div class="profile-container_wrapper">
         <div class="profile-container_user">
             <div class="profile-container_user-pic">
             </div>
             <span class="profile-container_user-name">
-                {{profile.[4].value}}
+                {{{ profileName }}}
             </span>
         </div>
         <ul class="profile-container_user-items">
-            {{#each profile}}
-                {{> "userItem/userItem"}}
-            {{/each}}
+            {{{ email }}}
+            {{{ login }}}
+            {{{ firstName }}}
+            {{{ secondName }}}
+            {{{ displayName }}}
+            {{{ phone }}}
         </ul>
         <ul class="profile-container_links">
-            {{#each links}}
-                <li class="profile-container_link">
-                    {{> "linkButton/linkButton"}}
-                </li>
-            {{/each}}
+            <li class="profile-container_link">
+                {{{ editData }}}
+            </li>
+            <li class="profile-container_link">
+                {{{ editPassword }}}
+            </li>
+            <li class="profile-container_link">
+                {{{ exit }}}
+            </li>
         </ul>
     </div>
 </div>

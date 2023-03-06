@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .input-container {
   display: flex;
   flex-direction: column;
@@ -18,13 +20,14 @@
     border-bottom: 1px solid $color_link_button_default;
     padding-bottom: 7px;
     margin-bottom: 4px;
+    text-align: left;
 
     &:focus {
       border-bottom: 1px solid $color_link_button_active;
     }
   }
 
-  .error-message {
+  .error {
     color: $color_link_button_active;
   }
 }

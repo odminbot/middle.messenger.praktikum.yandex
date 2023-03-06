@@ -1,11 +1,26 @@
----
-title: 'Чат'
-styles:
-  - '../../layouts/base.scss'
----
-
-{{!< base}} 
-
 <div class="chat">
-  <h1>Тут будет список чатов и лента переписки</h1>
+  <section class="chat_block">
+    <a class="chat_profile-link" href="../profile">Профиль &gt;</a>
+    <input type="text" class="chat_search" placeholder="Поиск">
+    <ul class="chat_list">
+        {{{ chatItems }}}
+    </ul>
+  </section>
+  <section class="chat_core">
+    <div class="chat_header">
+      <div class="chat_avatar"></div>
+      <h2 class="chat_name">{{chatName}}</h2>
+      <button type="button" class="chat_menu-button"></button>
+    </div>
+    <div class="chat_messages">
+     {{{ chatMessages }}}
+    </div>
+    <div class="chat_input-block">
+      <button class="chat_attach-button"></button>
+      {{{ inputMessage }}}
+      <label class="error">{{error}}</label>
+      {{{ buttonSend }}}
+    </div>
+    </section>
 </div>
+

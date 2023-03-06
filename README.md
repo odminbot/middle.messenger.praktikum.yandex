@@ -29,4 +29,4 @@
 
 ## Pull Requests
 
-[Pull Requests](https://github.com/odminbot/middle.messenger.praktikum.yandex/pull/2)
+[Pull Requests](https://github.com/odminbot/middle.messenger.praktikum.yandex/pull/3)

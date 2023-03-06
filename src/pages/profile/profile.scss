@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .profile-container {
   display: flex;
   flex-direction: row;
@@ -17,14 +19,14 @@
   background: $color_field;
   border-radius: 100px;
   margin-bottom: 20px;
-  background-image: url('../images/profile_no_avatar.svg');
+  background-image: url('../../images/profile_no_avatar.svg');
   background-repeat: no-repeat;
   background-position: center center;
   cursor: pointer;
   position: relative;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgb(0 0 0 / 50%);
   }
 
   &:hover::after {
@@ -49,7 +51,7 @@
   align-items: center;
   flex-grow: 1;
   justify-content: center;
-  padding:0 20px 0 20px;
+  padding:0 20px;
 }
 
 .profile-container_user-name {
@@ -83,3 +85,30 @@
   width: 100%;
   max-width: 280px;
 }
+
+.back-button {
+    height: 100%;
+    background: $color_background_back;
+    width: 64px;
+    border-right:1px solid $color_separation_line;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .send-button {
+    width: 28px;
+    height: 28px;
+    border-radius: 20px;
+    background: $color_link_button_default;
+    border: none;
+    background-image: url('../../images/arrow_left.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    &:hover {
+       cursor: pointer;
+    }
+  }
+  
