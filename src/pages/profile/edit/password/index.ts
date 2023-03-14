@@ -11,6 +11,14 @@ export class ProfileEditPasswordPage extends Block {
   }
 
   init() {
+    this.children.backButton = new Button({
+      value: '',
+      type: 'button',
+      className: 'send-button',
+      events: {
+        click: () => { window.location.href = '/messenger' },
+      },
+    });
     this.children.oldPassword = new Input({
       name: 'oldPassword',
       type: 'password',

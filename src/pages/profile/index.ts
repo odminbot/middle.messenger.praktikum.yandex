@@ -3,6 +3,7 @@ import styles from './profile.scss';
 import { Block } from '../../utils/Block';
 import { UserItem } from '../../components/userItem';
 import { LinkButton } from '../../components/linkButton';
+import { Button } from '../../components/button';
 
 export class ProfilePage extends Block {
   constructor() {
@@ -10,6 +11,14 @@ export class ProfilePage extends Block {
   }
 
   init() {
+    this.children.backButton = new Button({
+      value: '',
+      type: 'button',
+      className: 'send-button',
+      events: {
+        click: () => { window.location.href = '/messenger' },
+      },
+    });
     this.children.email = new UserItem({
       label: 'Почта',
       value: 'pochta@yandex.ru',

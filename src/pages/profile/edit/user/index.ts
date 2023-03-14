@@ -11,6 +11,14 @@ export class ProfileEditUserPage extends Block {
   }
 
   init() {
+    this.children.backButton = new Button({
+      value: '',
+      type: 'button',
+      className: 'send-button',
+      events: {
+        click: () => { window.location.href = '/messenger' },
+      },
+    });
     this.children.email = new Input({
       name: 'email',
       type: 'email',
