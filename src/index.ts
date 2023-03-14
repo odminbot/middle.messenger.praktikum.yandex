@@ -6,43 +6,19 @@ import { ProfileEditUserPage } from './pages/profile/edit/user';
 import { ChatPage } from './pages/chat';
 import { Error404 } from './pages/errors/404';
 import { Error500 } from './pages/errors/500';
-import { renderDom } from './utils/renderDom';
+import Router from "./utils/Router";
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+  const router = new Router("#app");
+  router
+    .use("/", LoginPage)
+    .use("/sign-up", RegistrationPage)
+    .use("/settings", ProfilePage)
+    .use("/messenger", ChatPage)
+    .use("/settings/edit/password", ProfileEditPasswordPage)
+    .use("/settings/edit/user", ProfileEditUserPage)
+    .use("/500", Error500)
+    .use("/404", Error404)
+  router.start()
 
-  let page = new LoginPage();
-  const path: string = window.location.pathname;
-
-  switch (path) {
-    case '/':
-      page = new LoginPage();
-      break;
-    case '/registration':
-      page = new RegistrationPage();
-      break;
-    case '/profile':
-      page = new ProfilePage();
-      break;
-    case '/profile/edit/password':
-      page = new ProfileEditPasswordPage();
-      break;
-    case '/profile/edit/user':
-      page = new ProfileEditUserPage();
-      break;
-    case '/chat':
-      page = new ChatPage();
-      break;
-    case '/500':
-      page = new Error500();
-      break;
-    case '/404':
-      page = new Error404();
-      break;
-    default:
-      page = new Error404();
-      break;
-  }
-
-  page.dispatchComponentDidMount();
-  renderDom('#app', page);
 });

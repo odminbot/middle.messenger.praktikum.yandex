@@ -15,7 +15,7 @@ export class Error404 extends Block {
       linkButton: new LinkButton({
         colorClass: 'color-default',
         anchor: 'Назад к чатам',
-        href: '/chat',
+        href: '/messenger',
       }),
     });
   }

@@ -37,17 +37,17 @@ export class ProfilePage extends Block {
     this.children.editData = new LinkButton({
       colorClass: 'color-default',
       anchor: 'Изменить данные',
-      href: '/profile/edit/user',
+      href: '/settings/edit/user',
     });
     this.children.editPassword = new LinkButton({
       colorClass: 'color-default',
       anchor: 'Изменить пароль',
-      href: '/profile/edit/password',
+      href: '/settings/edit/password',
     });
     this.children.exit = new LinkButton({
       colorClass: 'color-active',
       anchor: 'Выйти',
-      href: '/chat',
+      href: '/',
     });
   }
 

@@ -9,4 +9,6 @@ export function renderDom(rootSelector: string, component: Block) {
   root.innerHTML = '';
 
   root.append(component.getContent()!);
+
+  return root; //
 }
