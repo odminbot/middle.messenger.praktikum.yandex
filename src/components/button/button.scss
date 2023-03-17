@@ -11,3 +11,41 @@
   line-height: 13px;
   padding: 12px 70px;
 }
+
+.link-button {
+  border: none;
+  background: none;
+  padding:0;
+  margin:0;
+  text-align: left;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 11px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.color-default {
+   color: $color_link_button_default;
+}
+
+.color-active {
+  color: $color_link_button_active;
+}
+
+.send-button {
+  width: 28px;
+  height: 28px;
+  border-radius: 20px;
+  background: $color_link_button_default;
+  border: none;
+  background-image: url('../../images/arrow_left.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &:hover {
+     cursor: pointer;
+  }
+}

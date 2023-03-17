@@ -3,22 +3,45 @@ import { RegistrationPage } from './pages/registration';
 import { ProfilePage } from './pages/profile';
 import { ProfileEditPasswordPage } from './pages/profile/edit/password';
 import { ProfileEditUserPage } from './pages/profile/edit/user';
-import { ChatPage } from './pages/chat';
-import { Error404 } from './pages/errors/404';
-import { Error500 } from './pages/errors/500';
-import Router from "./utils/Router";
+//import { ChatPage } from './pages/chat';
+//import { Error404 } from './pages/errors/404';
+//import { Error500 } from './pages/errors/500';
+import Router  from './utils/Router';
+import AuthController from './controllers/AuthController';
+import { Routes } from './interfaces/routes';
 
 window.addEventListener('DOMContentLoaded', async () => {
-  const router = new Router("#app");
-  router
-    .use("/", LoginPage)
-    .use("/sign-up", RegistrationPage)
-    .use("/settings", ProfilePage)
-    .use("/messenger", ChatPage)
-    .use("/settings/edit/password", ProfileEditPasswordPage)
-    .use("/settings/edit/user", ProfileEditUserPage)
-    .use("/500", Error500)
-    .use("/404", Error404)
-  router.start()
 
+  Router
+    .use(Routes.Index, LoginPage)
+    .use(Routes.Registration, RegistrationPage)
+    .use(Routes.Profile, ProfilePage)
+    .use(Routes.EditPassword, ProfileEditPasswordPage)
+    .use(Routes.EditUser, ProfileEditUserPage)
+    //.use(Routes.Chat, ChatPage)
+  
+  let isProtectedRoute = true;
+
+  switch (window.location.pathname) {
+    case Routes.Index:
+    case Routes.Registration:
+      isProtectedRoute = false;
+      break;
+  }
+
+  try {
+    await AuthController.fetchUser();
+
+    Router.start();
+
+    if (!isProtectedRoute) {
+      Router.go(Routes.Profile)
+    }
+  } catch (e) {
+    Router.start();
+
+    if (isProtectedRoute) {
+      Router.go(Routes.Index);
+    }
+  }
 });

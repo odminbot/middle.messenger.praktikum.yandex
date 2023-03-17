@@ -1,5 +1,5 @@
 import template from './errors.hbs';
-import { Block } from '../../utils/Block';
+import Block from '../../utils/Block';
 import { LinkButton } from '../../components/linkButton';
 import { ErrorPage } from '../../components/error';
 

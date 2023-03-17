@@ -1,22 +1,22 @@
 import template from './editPassword.hbs';
 import styles from '../../profile.scss';
-import { Block } from '../../../../utils/Block';
+import Block from '../../../../utils/Block';
 import { Input } from '../../../../components/input';
 import { Button } from '../../../../components/button';
 import { focusin, focusout, submit } from '../../../../utils/Validator';
+import router from '../../../../utils/Router';
+import { Routes } from '../../../../interfaces/routes';
 
 export class ProfileEditPasswordPage extends Block {
-  constructor() {
-    super({});
-  }
 
   init() {
+
     this.children.backButton = new Button({
       value: '',
       type: 'button',
       className: 'send-button',
       events: {
-        click: () => { window.location.href = '/messenger' },
+        click: () => router.go(Routes.Chat),
       },
     });
     this.children.oldPassword = new Input({
@@ -60,7 +60,6 @@ export class ProfileEditPasswordPage extends Block {
   }
 
   render() {
-    const profileName = 'Иван';
-    return this.compile(template, { ...this.props, styles, profileName });
+    return this.compile(template, { ...this.props, styles });
   }
 }

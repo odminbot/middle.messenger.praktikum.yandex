@@ -1,4 +1,4 @@
-import { Block } from '../../utils/Block';
+import Block from '../../utils/Block';
 import template from './chatItem.hbs';
 import styles from './chatItem.scss';
 

@@ -96,19 +96,5 @@
     align-items: center;
     justify-content: center;
   }
-  
-  .send-button {
-    width: 28px;
-    height: 28px;
-    border-radius: 20px;
-    background: $color_link_button_default;
-    border: none;
-    background-image: url('../../images/arrow_left.svg');
-    background-repeat: no-repeat;
-    background-position: center center;
 
-    &:hover {
-       cursor: pointer;
-    }
-  }
   
