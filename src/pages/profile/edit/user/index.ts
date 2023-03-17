@@ -112,10 +112,10 @@ export class ProfileEditUserPage extends Block {
     const inputs = document.getElementsByTagName('input');
     const updateUserData = {};
     if (isValid(inputs)) {
-      //Array.from(inputs).forEach((input) => {
+      Array.from(inputs).forEach((input) => {
         // @ts-ignore
-      //  updateUserData[input.name] = input.value;
-      //});
+        updateUserData[input.name] = input.value;
+      });
 
       console.log('submit2');
       UserController.editUser(updateUserData as EditUser);
