@@ -3,17 +3,28 @@ import styles from './profile.scss';
 import Block from '../../utils/Block';
 import { UserItem } from '../../components/userItem';
 import { Button } from '../../components/button';
+import { Avatar } from "../../components/avatar";
 import { withStore } from '../../utils/Store';
 import AuthController from '../../controllers/AuthController';
+import UserController from "../../controllers/UserController";
 import router from '../../utils/Router';
 import { Routes } from '../../interfaces/routes';
 
-export class ProfilePageBase extends Block {
+class ProfilePageBase extends Block {
 
   init() {
 
     AuthController.fetchUser();
     
+    if (this.props.avatar) { 
+      this.props.avatar_style = `background-image: url(https://ya-praktikum.tech/api/v2/resources${this.props.avatar})`; 
+      this.props.avatar_class = 'profile-container_user-pic';
+    }
+    else { 
+      this.props.avatar_style = '';  
+      this.props.avatar_class = 'profile-container_user-pic default_avatar';  
+    }
+
     this.children.backButton = new Button({
       value: '',
       type: 'button',
@@ -23,31 +34,38 @@ export class ProfilePageBase extends Block {
       },
     });
 
-    //id, first_name, second_name, display_name, login, avatar, email, phone
-
+    this.children.avatar = new Avatar({
+      style: this.props.avatar_style,
+      class: this.props.avatar_class,
+      events: {
+        click: () => {
+          UserController.avatarEdit();
+        },
+      },
+    });
     this.children.email = new UserItem({
       label: 'Почта',
-      value: this.props.email,
+      value: this.props?.email,
     });
     this.children.login = new UserItem({
       label: 'Логин',
-      value: this.props.login,
+      value: this.props?.login,
     });
     this.children.firstName = new UserItem({
       label: 'Имя',
-      value: this.props.first_name,
+      value: this.props?.first_name,
     });
     this.children.secondName = new UserItem({
       label: 'Фамилия',
-      value: this.props.second_name,
+      value: this.props?.second_name,
     });
     this.children.displayName = new UserItem({
       label: 'Имя в чате',
-      value: this.props.display_name,
+      value: this.props?.display_name
     });
     this.children.phone = new UserItem({
       label: 'Телефон',
-      value: this.props.phone,
+      value: this.props?.phone,
     });
     this.children.editData = new Button({
       value: 'Изменить данные',
@@ -76,7 +94,7 @@ export class ProfilePageBase extends Block {
       }
     });
   }
-
+  
   render() {
     const profileName = this.props.first_name;
     return this.compile(template, { ...this.props, styles, profileName });

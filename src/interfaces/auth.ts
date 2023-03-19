@@ -12,7 +12,7 @@ export interface SignupData {
   phone: string;
 }
 
-export interface User extends Record<string, any>{
+export interface User extends Record<string, any> {
   id: number;
   first_name: string;
   second_name: string;
@@ -27,7 +27,8 @@ export interface User extends Record<string, any>{
 export interface EditUser {
   first_name: string;
   second_name: string;
-  display_name: string;
+  avatar?: string;
+  display_name?: string;
   login: string;
   email: string;
   phone: string;

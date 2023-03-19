@@ -32,7 +32,6 @@ export class AuthController {
 
   async fetchUser() {
     const user = await this.api.read();
-
     store.set('user', user);
   }
 
@@ -45,6 +44,23 @@ export class AuthController {
       console.error(e.message);
     }
   }
+  
+  async back() {
+    try {
+      router.back();
+    } catch (e: any) {
+      console.error(e.message);
+    }
+  }
+  
+  async forward() {
+    try {
+      router.forward();
+    } catch (e: any) {
+      console.error(e.message);
+    }
+  }
+
 }
 
 export default new AuthController();

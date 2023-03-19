@@ -5,8 +5,11 @@ import styles from './chatItem.scss';
 interface Props {
   title: string,
   message: string,
-  time: string,
+  time?: string,
   counter: number,
+  events?: {
+    click?: () => void;
+  },
 }
 
 export class ChatItem extends Block {

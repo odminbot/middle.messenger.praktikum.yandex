@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+.profile-container_user-pic {
+    width: 130px;
+    height: 130px;
+    background: $color_field;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        background: rgb(0 0 0 / 50%);
+        background-image: none!important;
+    }
+
+    &:hover::after {
+        content: 'Поменять аватар';
+        color: $color_hover_buton_text;
+        text-align: center;
+        position: absolute;
+        top: 47px;
+        left: 35px;
+        width: 60px;
+    }
+}
+
+.default_avatar {
+    background-image: url('../../images/profile_no_avatar.svg');
+}

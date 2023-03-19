@@ -7,7 +7,7 @@ export default class UserAPI extends BaseAPI {
   }
 
   //изменять данные пользователя
-  public changeProfile(data: EditUser) {
+  public changeProfile(data: EditUser):Promise<Response> {
     return this.http.put('/profile', data);
   }
 
@@ -22,7 +22,7 @@ export default class UserAPI extends BaseAPI {
 
   //изменять пароль
   public changePassword(data: EditPassword) {
-    return this.http.put('/password', { data });
+    return this.http.put('/password', data);
   }
 
   public getUserById(userId: string): Promise<User> {

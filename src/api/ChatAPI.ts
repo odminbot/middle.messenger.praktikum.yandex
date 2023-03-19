@@ -1,45 +1,53 @@
 import BaseAPI from './BaseAPI';
 
-export interface IChatInfo {
-  id: number,
-  title: string,
-  avatar: string,
-  unread_count: number,
+export interface TypesChat {
+  title: string;
+}
+
+export interface Chat {
+  id: number;
+  title: string;
+  avatar: string;
+  unread_count: number;
   last_message: {
-    first_name: string,
-    second_name: string,
-    avatar: string,
-    email: string,
-    login: string,
-    phone: string
-  },
-  time: string
-  content: string
+    user: User
+    time: string;
+    content: string;
+  };
 }
 
-export interface IChatData {
-  id?: string,
-  title?: string,
-  chatId?: number,
-  userId?: number
+export interface User {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+  avatar: string;
 }
 
-export default class ChatAPI extends BaseAPI {
+export interface TypesUsersChat {
+  users: number[];
+  chatId: number;
+}
+
+export class ChatAPI extends BaseAPI {
   constructor() {
       super('/chats');
   }
   
-  read(): Promise<IChatInfo> {
+  //список чатов пользователя
+  read(): Promise<Chat> {
     return this.http.get('/')
   }
   
   //создать новый чат
   createChat(title: string): Promise<string> {
-    return this.http.post('/', {title})
+    return this.http.post('/', title);
   }
 
-  deleteChat(chatId: number): Promise<string>  {
-    return this.http.delete('/', {chatId});
+  deleteChat(id: number): Promise<string>  {
+    return this.http.delete('/', {chatId:id});
   }
 
   getChatUsers(chatId: number): Promise<string> {
@@ -47,16 +55,15 @@ export default class ChatAPI extends BaseAPI {
   }
 
   //добавить пользователя в чат
-  addUserToChat(chatId: number, userId: number) {
-      return this.http.put('/users', { users: [userId], chatId: chatId })
+  addUserToChat(data: TypesUsersChat) {
+      return this.http.put('/users', data);
   }
 
   //удалить пользователя из чата
-  deleteUserFromChat(chatId: number, userId: number) {
-      return this.http.delete('/users', { users: [userId], chatId: chatId })
+  deleteUserFromChat(data: TypesUsersChat) {
+      return this.http.delete('/users', data);
   }
 
-  //список чатов пользователя
   getToken(chatId: number): Promise<string> {
       return this.http.post(`/token/${chatId}`);
   }

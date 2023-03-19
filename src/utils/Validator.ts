@@ -71,7 +71,6 @@ const isValid = (inputs: any): boolean => {
   // @ts-ignore
   return Array.from(inputs).every((element: Element) => {
     const inputElement = element as HTMLInputElement;
-    console.log(inputElement.name);
     if(inputElement.name===undefined) { return true;  }
     if(rulesForFields[inputElement.name]===undefined) {  return true; }
     const { rule } = rulesForFields[inputElement.name];
@@ -85,7 +84,6 @@ const submit = (event: Event): void => {
   const inputs = document.getElementsByTagName('input');
   const isTrue: boolean = Array.from(inputs).every((element: Element) => {
     const inputElement = element as HTMLInputElement;
-    console.log(inputElement.name);
     if(inputElement.name===undefined) { return true;  }
     if(rulesForFields[inputElement.name]===undefined) { return true;  }
     const { rule } = rulesForFields[inputElement.name];
@@ -98,7 +96,6 @@ const submit = (event: Event): void => {
     Array.from(inputs).forEach((input) => {
       data[input.name] = input.value;
     });
-    console.log(data);
   }
 };
 

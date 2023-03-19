@@ -3,14 +3,15 @@ import styles from '../../profile.scss';
 import Block from '../../../../utils/Block';
 import { Input } from '../../../../components/input';
 import { Button } from '../../../../components/button';
-import { focusin, focusout, submit, isValid } from '../../../../utils/Validator';
+import { focusin, focusout, isValid } from '../../../../utils/Validator';
 import router from '../../../../utils/Router';
 import { Routes } from '../../../../interfaces/routes';
 import UserController from '../../../../controllers/UserController';
 import { EditUser } from '../../../../interfaces/auth';
 import store from '../../../../utils/Store';
+import { withStore } from '../../../../utils/Store';
 
-export class ProfileEditUserPage extends Block {
+class ProfileEditUser extends Block {
 
   constructor() {
     super({});
@@ -106,9 +107,6 @@ export class ProfileEditUserPage extends Block {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    
-    console.log('submit1');
-
     const inputs = document.getElementsByTagName('input');
     const updateUserData = {};
     if (isValid(inputs)) {
@@ -117,10 +115,7 @@ export class ProfileEditUserPage extends Block {
         updateUserData[input.name] = input.value;
       });
 
-      console.log('submit2');
       UserController.editUser(updateUserData as EditUser);
-      console.log('submit3');
-      router.go(Routes.Profile);
     }
   }
 
@@ -129,3 +124,6 @@ export class ProfileEditUserPage extends Block {
   }
 
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+export const ProfileEditUserPage = withUser(ProfileEditUser);
