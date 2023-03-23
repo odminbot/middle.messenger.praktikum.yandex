@@ -5,7 +5,7 @@ import styles from './input.scss';
 interface InputProps {
   type: string;
   name: string;
-  class: string;
+  class?: string;
   value?: string;
   label?: string,
   error?: string,

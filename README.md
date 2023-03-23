@@ -1,5 +1,5 @@
 # Chat Messenger
-    Simple chat app (educational project) 
+    Simple chat app (educational project) - 3 sprint
 
 
 ## Run project in dev mode
@@ -29,4 +29,4 @@
 
 ## Pull Requests
 
-[Pull Requests](https://github.com/odminbot/middle.messenger.praktikum.yandex/pull/3)
+[Pull Requests](https://github.com/odminbot/middle.messenger.praktikum.yandex/pull/4)

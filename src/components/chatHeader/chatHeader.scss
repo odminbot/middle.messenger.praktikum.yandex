@@ -1,21 +1,19 @@
-.chat-options {
+@import '../../styles/variables';
+
+.chat-header {
   display: flex;
-  width: 100%;
-  background: var(--white);
-  border-bottom: 1px solid var(--grey-border);
   align-items: center;
-  justify-content: end;
-  height: 55px;
-}
+  justify-content: space-between;
+  column-gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid $color_separation_line;
 
-.user-input-add {
-  background: var(--grey-search);
-  height: 32px;
-  text-align: center;
-  border: none;
-  border-radius: 5px;
-}
+  &_users {
+    font-size: 12px;
+  }
 
-.ta-center {
-  text-align: center;
+  &_no-chat {
+    margin-top:150px;
+    font-size: 16px;
+  }
 }

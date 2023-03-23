@@ -3,23 +3,42 @@ import styles from '../../profile.scss';
 import Block from '../../../../utils/Block';
 import { Input } from '../../../../components/input';
 import { Button } from '../../../../components/button';
+import { Avatar } from "../../../../components/avatar";
 import { focusin, focusout, isValid } from '../../../../utils/Validator';
 import router from '../../../../utils/Router';
 import { Routes } from '../../../../interfaces/routes';
 import UserController from '../../../../controllers/UserController';
-import { EditUser } from '../../../../interfaces/auth';
+import { User } from '../../../../interfaces';
 import store from '../../../../utils/Store';
 import { withStore } from '../../../../utils/Store';
 
 class ProfileEditUser extends Block {
 
-  constructor() {
-    super({});
-  }
-
   init() {
 
     const userData = store.getState().user;
+
+    let avatar_style = '';
+    let avatar_class = '';
+    
+    if (this.props.avatar) { 
+      avatar_style = `background-image: url(${this.props.avatar})`; 
+      avatar_class = 'profile-container_user-pic';
+    }
+    else { 
+      avatar_style = '';  
+      avatar_class = 'profile-container_user-pic default_avatar';  
+    }
+        
+    this.children.avatar = new Avatar({
+      style: avatar_style,
+      class: avatar_class,
+      events: {
+        click: () => {
+          UserController.avatarEdit();
+        },
+      },
+    });
 
     this.children.backButton = new Button({
       value: '',
@@ -33,7 +52,7 @@ class ProfileEditUser extends Block {
       name: 'email',
       type: 'email',
       label: 'Email',
-      value: userData.email,
+      value: userData?.email,
       class: 'input-container',
       events: {
         focusin,
@@ -44,7 +63,7 @@ class ProfileEditUser extends Block {
       name: 'login',
       type: 'text',
       label: 'Логин',
-      value: userData.login,
+      value: userData?.login,
       class: 'input-container',
       events: {
         focusin,
@@ -55,7 +74,7 @@ class ProfileEditUser extends Block {
       name: 'first_name',
       type: 'text',
       label: 'Имя',
-      value: userData.first_name,
+      value: userData?.first_name,
       class: 'input-container',
       events: {
         focusin,
@@ -66,7 +85,7 @@ class ProfileEditUser extends Block {
       name: 'second_name',
       type: 'text',
       label: 'Фамилия',
-      value: userData.second_name,
+      value: userData?.second_name,
       class: 'input-container',
       events: {
         focusin,
@@ -77,7 +96,7 @@ class ProfileEditUser extends Block {
       name: 'display_name',
       type: 'text',
       label: 'Имя в чате',
-      value: userData.display_name,
+      value: userData?.display_name,
       class: 'input-container',
       events: {
         focusin,
@@ -88,7 +107,7 @@ class ProfileEditUser extends Block {
       name: 'phone',
       type: 'text',
       label: 'Телефон',
-      value: userData.phone,
+      value: userData?.phone,
       class: 'input-container',
       events: {
         focusin,
@@ -115,7 +134,7 @@ class ProfileEditUser extends Block {
         updateUserData[input.name] = input.value;
       });
 
-      UserController.editUser(updateUserData as EditUser);
+      UserController.editUser(updateUserData as User);
     }
   }
 

@@ -1,4 +1,9 @@
 import Block from './Block';
+import { Error404 } from '../pages/errors/404';
+
+export interface BlockConstructable<P = any> {
+  new(props: P): Block<P>;
+}
 
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
@@ -20,10 +25,10 @@ function render(query: string, block: Block) {
 
 class Route {
   private block: Block | null = null;
-
+  
   constructor(
     private pathname: string,
-    private readonly blockClass: typeof Block,
+    private readonly blockClass: BlockConstructable,
     private readonly query: string) {
   }
 
@@ -45,7 +50,7 @@ class Route {
   }
 }
 
-class Router {
+export class Router {
   private static __instance: Router;
   private routes: Route[] = [];
   private currentRoute: Route | null = null;
@@ -61,11 +66,25 @@ class Router {
     Router.__instance = this;
   }
 
-  public use(pathname: string, block: typeof Block) {
+  public use(pathname: string, block: BlockConstructable) {
     const route = new Route(pathname, block, this.rootQuery);
     this.routes.push(route);
 
     return this;
+  }
+
+  public go(pathname: string) {
+    this.history.pushState({}, '', pathname);
+
+    this._onRoute(pathname);
+  }
+
+  public back() {
+    this.history.back();
+  }
+
+  public forward() {
+    this.history.forward();
   }
 
   public start() {
@@ -82,6 +101,8 @@ class Router {
     const route = this.getRoute(pathname);
 
     if (!route) {
+      const errorPage = new Route("/404", Error404, this.rootQuery);
+      errorPage.render();
       return;
     }
 
@@ -92,20 +113,6 @@ class Router {
     this.currentRoute = route;
 
     route.render();
-  }
-
-  public go(pathname: string) {
-    this.history.pushState({}, '', pathname);
-
-    this._onRoute(pathname);
-  }
-
-  public back() {
-    this.history.back();
-  }
-
-  public forward() {
-    this.history.forward();
   }
 
   private getRoute(pathname: string) {

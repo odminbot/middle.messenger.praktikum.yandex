@@ -56,16 +56,12 @@
   border: none;
   color: $color_hover_buton_text;
   font-weight: 500;
-  font-size: 13px;
-  line-height: 13px;
+  font-size: 11px;
+  line-height: 11px;
   margin-left: 5px;
-  padding: 10px 5px;
+  padding: 9px 10px;
 
   &.activ {
     background: $color_link_button_active;
-  }
-
-  &.add {
-    width:100px;
   }
 }

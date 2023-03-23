@@ -1,22 +1,19 @@
-import { ChatAPI, TypesUsersChat } from "../api/ChatAPI";
+import API, { ChatAPI } from "../api/ChatAPI";
+import { TypesUsersChat, TitleChat } from '../interfaces/';
 import store from "../utils/Store";
+import MessagesController from './MessagesController';
+import UserController from './UserController';
 
 class ChatController {
   private readonly api: ChatAPI;
 
-  socket: WebSocket | null;
-
-  data: any;
-
   constructor() {
-    this.api = new ChatAPI();
-    this.socket = null;
+    this.api = API;
   }
 
-  async createChat(data: any) {
+  async createChat(data: TitleChat) {
     try {
       await this.api.createChat(data);
-
       await this.getChats();
     } catch (e: any) {
       console.error(e);
@@ -24,121 +21,105 @@ class ChatController {
   }
 
   async getChats() {
-    const chats = await this.api.read();
-    store.set("allChats", chats);
+    try {
+      const chats = await this.api.read();
+
+      chats.map(async (chat) => {
+        const token = await this.getToken(chat.id) ?? '';
+
+        await MessagesController.connect(chat.id, token);
+      });
+
+      store.set('chats', chats);
+    } catch (e: unknown) {
+      console.error(e);
+    }
   }
 
-  async getChat(id: number, userId: number, name: string) {
-    const resp: any = await this.api.getToken(id);
-    const { token } = resp;
-
-    console.log(`chatId: ${id} | token: ${token} | nameChat: ${name} | userId: ${userId}`);
-    store.set("chatId", id);
-    store.set("token", token);
-    store.set("nameChat", name);
-
-    if (this.socket) {
-      this.socket.close();
-      store.set("chat", { chatId: id });
+  getToken(chatId: number) {
+    try {
+      return this.api.getToken(chatId);
+    } catch (e: unknown) {
+      console.error(e);
     }
-    this.socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`);
-
-    this.socket.addEventListener("close", (event) => {
-      
-      if (event.wasClean) { 
-        console.log("connection close");
-      } else {
-        console.log("connection lost");
-      }
-
-      console.log(`Code: ${event.code} | Reason: ${event.reason}`);
-    });
-
-    this.socket.addEventListener("open", () => {
-      console.log("connection open");
-      (this.socket as WebSocket).send(
-        JSON.stringify({
-          content: "0",
-          type: "get old",
-        })
-      );
-    });
-
-    this.socket.addEventListener("message", (evt) => {
-      
-      let user = JSON.parse(evt.data); 
-
-      if (!user) {
-        throw new SyntaxError('Error');
-      } else {
-        this.data = {
-          ...user,
-          chatId: id,
-        };
-        store.set("chat", user);
-      }
-    });
-
-    this.socket.addEventListener("error", (evt: any) => {
-      console.log('Error', evt.message);
-    });
-
-    this.getChats();
-  }
-
-  async sendMessage(newMessage: { message: string }) {
-    if (this.socket) {
-      this.socket.send(
-        JSON.stringify({
-          content: newMessage.message,
-          type: "message",
-        })
-      );
-      this.socket.send(
-        JSON.stringify({
-          content: "0",
-          type: "get old",
-        })
-      );
-    }
-
-    this.getChats();
   }
 
   async deleteChat(id: number) {
     try {
       await this.api.deleteChat(id);
       store.set("token", undefined);
+      store.set("selectedChat", undefined);
+      store.set("users", undefined);
       await this.getChats();
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e);
     }
   }
 
-  async addUser(data: TypesUsersChat) {
+  async addUser(data: TypesUsersChat, currentChat: number) {
     try {
       await this.api.addUserToChat(data);
       await this.getChats();
-    } catch (e: any) {
+      await this.getUsers(currentChat);
+
+    } catch (e: unknown) {
       console.error(e);
     }
   }
 
-  async deleteUser(data: TypesUsersChat) {
+  async deleteUser(data: TypesUsersChat, currentChat: number) {
     try {
       await this.api.deleteUserFromChat(data);
       await this.getChats();
-    } catch (e: any) {
+      await this.getUsers(currentChat);
+
+    } catch (e: unknown) {
       console.error(e);
     }
   }
+  
+  async addUserByLogin(login: string) {
+    try {
+      const currentChat = store.getState().selectedChat;
+      if (currentChat) {
+        const userId = await UserController.getIdByLogin(login);
+        if (userId) {
+          await this.addUser({ users: [userId], chatId: currentChat}, currentChat);
+        }
+      }
+    } catch (e: unknown) {
+      console.error(e);
+    }
+  }
+
+  async deleteUserByLogin(login: string) {
+    try {
+      const currentChat = store.getState().selectedChat;
+      if (currentChat) {
+        const userId = await UserController.getIdByLogin(login);
+        if (userId) {
+          await this.deleteUser({ users: [userId], chatId:currentChat}, currentChat);
+        }
+      }
+    } catch (e: unknown) {
+      console.error(e);
+    }
+  }
+
+  async getUsers(chatId: number) {
+    try {
+      const users = await this.api.getChatUsers(chatId);
+      store.set('users', users);
+    } catch (e: unknown) {
+      console.error(e);
+    }
+  }
+
+  selectChat(chatId: number, chatTitle: string) {
+    store.set('selectedChat', chatId);
+    store.set('selectedChatTitle', chatTitle);
+    this.getUsers(chatId);
+  }
 }
 
-// export default new ChatController();
-
-const controller = new ChatController();
-
-// @ts-ignore
-window.chatsController = controller;
-
-export default controller;
+export default new ChatController();

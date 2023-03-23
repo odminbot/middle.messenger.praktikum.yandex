@@ -11,20 +11,9 @@ import router from '../../utils/Router';
 import { Routes } from '../../interfaces/routes';
 
 class ProfilePageBase extends Block {
-
   init() {
-
     AuthController.fetchUser();
-    
-    if (this.props.avatar) { 
-      this.props.avatar_style = `background-image: url(https://ya-praktikum.tech/api/v2/resources${this.props.avatar})`; 
-      this.props.avatar_class = 'profile-container_user-pic';
-    }
-    else { 
-      this.props.avatar_style = '';  
-      this.props.avatar_class = 'profile-container_user-pic default_avatar';  
-    }
-
+ 
     this.children.backButton = new Button({
       value: '',
       type: 'button',
@@ -34,9 +23,21 @@ class ProfilePageBase extends Block {
       },
     });
 
+    let avatar_style = '';
+    let avatar_class = '';
+    
+    if (this.props.avatar) { 
+      avatar_style = `background-image: url(${this.props.avatar})`; 
+      avatar_class = 'profile-container_user-pic';
+    }
+    else { 
+      avatar_style = '';  
+      avatar_class = 'profile-container_user-pic default_avatar';  
+    }
+        
     this.children.avatar = new Avatar({
-      style: this.props.avatar_style,
-      class: this.props.avatar_class,
+      style: avatar_style,
+      class: avatar_class,
       events: {
         click: () => {
           UserController.avatarEdit();

@@ -1,8 +1,9 @@
 import API, { AuthAPI } from '../api/AuthAPI';
 import store from '../utils/Store';
 import router from '../utils/Router';
-import { SigninData, SignupData } from '../interfaces/auth';
+import { SigninData, User } from '../interfaces';
 import { Routes } from '../interfaces/routes';
+import MessagesController from './MessagesController';
 
 export class AuthController {
   private readonly api: AuthAPI;
@@ -14,17 +15,20 @@ export class AuthController {
   async signin(data: SigninData) {
     try {
       await this.api.signin(data);
-      router.go(Routes.Profile);
+      await this.fetchUser();
+      store.set('IsSigned', true);
+      router.go(Routes.Chat);
     } catch (e: any) {
       console.error(e);
     }
   }
 
-  async signup(data: SignupData) {
+  async signup(data: User) {
     try {
       await this.api.signup(data);
       await this.fetchUser();
-      router.go(Routes.Profile);
+      store.set('IsSigned', true);
+      router.go(Routes.Chat);
     } catch (e: any) {
       console.error(e.message);
     }
@@ -32,13 +36,14 @@ export class AuthController {
 
   async fetchUser() {
     const user = await this.api.read();
-    store.set('user', user);
+    store.setUser(user);
   }
 
   async logout() {
     try {
-      console.log('auth controller logout');
+      MessagesController.closeAll();
       await this.api.logout();
+      store.set('IsSigned', false);
       router.go(Routes.Index);
     } catch (e: any) {
       console.error(e.message);

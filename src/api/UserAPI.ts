@@ -1,17 +1,15 @@
 import BaseAPI from './BaseAPI';
-import { User, EditUser, EditPassword } from '../interfaces/auth';
+import { User, EditPassword } from '../interfaces';
 
-export default class UserAPI extends BaseAPI {
+export class UserAPI extends BaseAPI {
   constructor() {
     super('/user');
   }
 
-  //изменять данные пользователя
-  public changeProfile(data: EditUser):Promise<Response> {
+  public changeProfile(data: User):Promise<Response> {
     return this.http.put('/profile', data);
   }
 
-  //изменять аватар
   public changeAvatar(data: FormData) {
     return this.http.put('/profile/avatar', data);
   }
@@ -20,7 +18,6 @@ export default class UserAPI extends BaseAPI {
     return this.http.post('/search',  { login: login });
   }
 
-  //изменять пароль
   public changePassword(data: EditPassword) {
     return this.http.put('/password', data);
   }
@@ -29,8 +26,14 @@ export default class UserAPI extends BaseAPI {
     return this.http.get(`/${userId}`);
   }
 
+  search(login: string): Promise<User[]> {
+    return this.http.post('/search', {login});
+  }
+
   create = undefined;
   update = undefined;
   delete = undefined;
   read = undefined;
 }
+
+export default new UserAPI();

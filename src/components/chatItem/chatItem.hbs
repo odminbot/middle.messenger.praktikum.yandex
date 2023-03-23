@@ -1,9 +1,9 @@
-<li class="chat-item">
+<li class="chat-item{{#if isSelected}} chat-item_active{{/if}}">
   <span class="chat-item_title">{{title}}</span>
-  <p class="chat-item_message">{{message}}</p>
-  <div class="chat-item_avatar"></div>
+  <p class="chat-item_message">{{last_message}}</p>
+  {{!-- <div class="chat-item_avatar"></div> --}}
   <span class="chat-item_date">{{time}}</span>
-  {{#if counter}}
-    <span class="chat-item_counter">{{counter}}</span>
+  {{#if unread_count}}
+    <span class="chat-item_counter">{{unread_count}}</span>
   {{/if}}
 </li>

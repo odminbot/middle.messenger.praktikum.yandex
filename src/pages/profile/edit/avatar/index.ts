@@ -21,6 +21,7 @@ export class EditAvatar extends Block<any> {
   }
 
   init() {
+    
     this.children.saveButton = new Button({
       type: 'button',
       value: 'Поменять',

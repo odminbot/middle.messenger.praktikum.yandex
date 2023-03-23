@@ -1,6 +1,6 @@
 import template from './errors.hbs';
 import Block from '../../utils/Block';
-import { LinkButton } from '../../components/linkButton';
+import { Link } from '../../components/linkButton';
 import { ErrorPage } from '../../components/error';
 
 export class Error404 extends Block {
@@ -12,7 +12,7 @@ export class Error404 extends Block {
     this.children.error = new ErrorPage({
       error: '404',
       message: 'Не туда попали',
-      linkButton: new LinkButton({
+      linkButton: new Link({
         colorClass: 'color-default',
         anchor: 'Назад к чатам',
         href: '/messenger',

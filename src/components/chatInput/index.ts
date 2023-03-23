@@ -18,6 +18,10 @@ export class ChatInput extends Block {
     return (this.element as HTMLInputElement).value;
   }
 
+  public setValue(value: string) {
+    return (this.element as HTMLInputElement).value = value;
+  }
+
   render() {
     return this.compile(template, { ...this.props, styles });
   }

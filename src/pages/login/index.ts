@@ -5,7 +5,7 @@ import { Button } from '../../components/button';
 import { Link } from '../../components/linkButton';
 import { Input } from '../../components/input';
 import { focusin, focusout, isValid } from '../../utils/Validator';
-import { SigninData } from '../../interfaces/auth';
+import { SigninData } from '../../interfaces';
 import AuthController from '../../controllers/AuthController';
 import { Routes } from '../../interfaces/routes';
 

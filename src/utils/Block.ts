@@ -1,18 +1,18 @@
-import { EventBus } from './EventBus';
-import { nanoid } from 'nanoid';
+import {nanoid} from 'nanoid';
+import EventBus from './EventBus';
+import isEqual from './helpers';
 
-// Нельзя создавать экземпляр данного класса
 class Block<P extends Record<string, any> = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render'
+    FLOW_RENDER: 'flow:render',
   } as const;
 
   public id = nanoid(6);
   protected props: P;
-  public children: Record<string, any>;
+  public children: Record<string, Block | Block[]>;
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
 
@@ -24,7 +24,7 @@ class Block<P extends Record<string, any> = any> {
    */
   constructor(propsWithChildren: P) {
     const eventBus = new EventBus();
-
+    
     const {props, children} = this._getChildrenAndProps(propsWithChildren);
 
     this.children = children;
@@ -54,15 +54,15 @@ class Block<P extends Record<string, any> = any> {
     return {props: props as P, children};
   }
 
-  _addEvents() {
+  private _addEvents() {
     const {events = {}} = this.props as P & { events: Record<string, () => void> };
 
-    Object.keys(events).forEach(eventName => {
+    Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
     });
   }
 
-  _registerEvents(eventBus: EventBus) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -76,13 +76,15 @@ class Block<P extends Record<string, any> = any> {
   }
 
   protected init() {
+    return;
   }
 
-  _componentDidMount() {
+  private _componentDidMount() {
     this.componentDidMount();
   }
 
-  componentDidMount() {
+  protected componentDidMount() {
+    return;
   }
 
   public dispatchComponentDidMount() {
@@ -104,10 +106,10 @@ class Block<P extends Record<string, any> = any> {
   }
 
   protected componentDidUpdate(oldProps: P, newProps: P) {
-    return true;
+    return !isEqual(oldProps, newProps);
   }
 
-  setProps = (nextProps: Partial<P>) => {
+  public setProps = (nextProps: Partial<P>) => {
     if (!nextProps) {
       return;
     }
@@ -159,7 +161,7 @@ class Block<P extends Record<string, any> = any> {
 
       component.getContent()?.append(...Array.from(stub.childNodes));
 
-      stub.replaceWith(component.getContent()!);
+      stub.replaceWith(component.getContent() ?? '');
     }
 
     Object.entries(this.children).forEach(([_, component]) => {
@@ -177,12 +179,12 @@ class Block<P extends Record<string, any> = any> {
     return new DocumentFragment();
   }
 
-  getContent() {
+  public getContent() {
     return this.element;
   }
 
-  _makePropsProxy(props: P) {
-    // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
+  private _makePropsProxy(props: P) {
+
     const self = this;
 
     return new Proxy(props, {
@@ -191,18 +193,16 @@ class Block<P extends Record<string, any> = any> {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target, prop: string, value) {
-        const oldTarget = {...target}
+        const oldTarget = {...target};
 
         target[prop as keyof P] = value;
 
-        // Запускаем обновление компоненты
-        // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },
       deleteProperty() {
         throw new Error('Нет доступа');
-      }
+      },
     });
   }
 }

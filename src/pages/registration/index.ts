@@ -5,7 +5,7 @@ import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { Link } from '../../components/linkButton';
 import { focusin, focusout, isValid } from '../../utils/Validator';
-import { SignupData } from '../../interfaces/auth';
+import { User } from '../../interfaces';
 import AuthController from '../../controllers/AuthController';
 import { Routes } from '../../interfaces/routes';
 
@@ -109,7 +109,7 @@ export class RegistrationPage extends Block {
         // @ts-ignore
         signUpData[input.name] = input.value;
       });
-      AuthController.signup(signUpData as SignupData);
+      AuthController.signup(signUpData as User);
     }
   }
 

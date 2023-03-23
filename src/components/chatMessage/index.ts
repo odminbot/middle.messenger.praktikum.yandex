@@ -2,19 +2,19 @@ import Block from '../../utils/Block';
 import template from './chatMessage.hbs';
 import styles from './chatMessage.scss';
 
-interface Props {
-  class: string,
-  date: string,
-  text: string,
+interface ChatMessageProps {
+  date?: string,
+  content: string,
   time: string,
+  isMine: boolean;
 }
 
-export class ChatMessage extends Block {
-  constructor(props: Props) {
+export class ChatMessage extends Block<ChatMessageProps> {
+  constructor(props: ChatMessageProps) {
     super(props);
   }
 
-  render() {
+  protected render(): DocumentFragment {
     return this.compile(template, { ...this.props, styles });
   }
 }

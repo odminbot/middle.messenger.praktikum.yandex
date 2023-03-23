@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 .chat-item {
-  padding: 15px 0;
+  padding: 15px 5px;
   border-top: 1px solid $color_separation_line;
   align-items: flex-end;
   display: grid;
@@ -11,6 +11,11 @@
   
   &:last-child {
     border-bottom: 1px solid $color_separation_line;
+  }
+
+  &:hover {
+    background-color: $color_message_background_chat_select;
+    cursor: pointer;
   }
 
   &_title {
@@ -65,5 +70,9 @@
     grid-column: 3;
     grid-row: 2;
     justify-self: end;
+  }
+
+  &_active {
+    border: 1px solid $color_text_light;
   }
 }
