@@ -19,7 +19,6 @@ export class AuthAPI extends BaseAPI {
   }
 
   logout() {
-    console.log('auth api logout');
     return this.http.post('/logout');
   }
 

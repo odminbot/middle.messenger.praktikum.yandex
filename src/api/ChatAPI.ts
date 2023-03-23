@@ -23,7 +23,6 @@ export class ChatAPI extends BaseAPI {
   }
 
   addUserToChat(data: TypesUsersChat) {
-      console.log(data);
       return this.http.put('/users', data);
   }
 
