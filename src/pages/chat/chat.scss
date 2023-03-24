@@ -2,7 +2,6 @@
 
 .chat {
     display: flex;
-    overflow: hidden;
   
   &_block {
     width: 310px;
@@ -74,6 +73,8 @@
     border-right: 1px solid $color_separation_line;
     justify-content: space-between;
     flex-grow: 1;
+    overflow: auto;
+    height: 100vh;
   }
 
   &_avatar {

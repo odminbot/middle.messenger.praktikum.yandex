@@ -14,10 +14,12 @@ body {
   min-width:900px;
   max-width:1200px;
   height: 100vh;
+  overflow-y:hidden;
 }
   
 main {
   height: 100vh;
+  overflow-y:hidden;
 }
 
 h1 {
