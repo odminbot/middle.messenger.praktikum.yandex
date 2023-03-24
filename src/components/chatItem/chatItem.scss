@@ -39,10 +39,17 @@
   &_avatar {
     width: 47px;
     height: 47px;
-    background-color: $color_field;
     border-radius: 50%;
     grid-column: 1;
     grid-row: 1 / 3;
+    background-repeat: no-repeat;
+    background-size: 47px;
+    background-position: center center;
+    position: relative;
+  }
+
+  &_no-avatar {
+    background-color: $color_field;
   }
 
   &_date {
