@@ -28,10 +28,25 @@ class ChatCoreBase extends Block<ChatCoreProps> {
       class: 'chat_message',
       placeholder: 'Сообщение',
       name: 'message',
+      id: 'message',
+      events: {
+        keyup: (e:KeyboardEvent) => {
+          if (e.key === 'Enter') {
+            const input: any = document.querySelector("#message");
+            const inputMessage = this.children.input as ChatInput;
+            const message = inputMessage.getValue();
+
+            if (message !== "") {
+              MessagesController.sendMessage(this.props.selectedChat!, message);
+              input.value = "";
+            }
+          }
+        },
+      }
     });
 
     this.children.button = new Button({
-      type: 'button',
+      type: 'submit',
       className: 'chat_send-button',
       events: {
         click: () => {
@@ -41,7 +56,7 @@ class ChatCoreBase extends Block<ChatCoreProps> {
           if (message !== '' && this.props.selectedChat) {
             MessagesController.sendMessage(this.props.selectedChat, message);
           }
-        }
+        },
       }
     });
 

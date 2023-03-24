@@ -3,11 +3,17 @@ import template from './chatInput.hbs';
 import styles from './chatInput.scss';
 
 interface Props {
+  id?: string,
   name: string,
   class: string,
   placeholder?: string,
-  events?: { focusin: (e: Event) => void; focusout: (e: Event) => void };
+  events?: {
+    focusin?: (e: Event) => void;
+    focusout?: (e: Event) => void;
+    keyup?: (e:KeyboardEvent) => void | undefined;
+  };
 }
+
 
 export class ChatInput extends Block {
   constructor(props: Props) {
