@@ -31,7 +31,7 @@ class ChatCoreBase extends Block<ChatCoreProps> {
       id: 'message',
       events: {
         keyup: (e:KeyboardEvent) => {
-          if (e.key === 'Enter') {
+          if (e.key === 'Enter'  || e.code === 'NumpadEnter') {
             const input: any = document.querySelector("#message");
             const inputMessage = this.children.input as ChatInput;
             const message = inputMessage.getValue();
