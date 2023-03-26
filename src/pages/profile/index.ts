@@ -1,58 +1,106 @@
 import template from './profile.hbs';
 import styles from './profile.scss';
-import { Block } from '../../utils/Block';
+import Block from '../../utils/Block';
 import { UserItem } from '../../components/userItem';
-import { LinkButton } from '../../components/linkButton';
+import { Button } from '../../components/button';
+import { Avatar } from "../../components/avatar";
+import { withStore } from '../../utils/Store';
+import AuthController from '../../controllers/AuthController';
+import UserController from "../../controllers/UserController";
+import router from '../../utils/Router';
+import { Routes } from '../../interfaces/routes';
 
-export class ProfilePage extends Block {
-  constructor() {
-    super({});
-  }
-
+class ProfilePageBase extends Block {
   init() {
+    AuthController.fetchUser();
+ 
+    this.children.backButton = new Button({
+      value: '',
+      type: 'button',
+      className: 'send-button',
+      events: {
+        click: () => router.go(Routes.Chat),
+      },
+    });
+
+    let avatar_style = '';
+    let avatar_class = '';
+    
+    if (this.props.avatar) { 
+      avatar_style = `background-image: url(${this.props.avatar})`; 
+      avatar_class = 'profile-container_user-pic';
+    }
+    else { 
+      avatar_style = '';  
+      avatar_class = 'profile-container_user-pic default_avatar';  
+    }
+        
+    this.children.avatar = new Avatar({
+      style: avatar_style,
+      class: avatar_class,
+      events: {
+        click: () => {
+          UserController.avatarEdit();
+        },
+      },
+    });
     this.children.email = new UserItem({
       label: 'Почта',
-      value: 'pochta@yandex.ru',
+      value: this.props?.email,
     });
     this.children.login = new UserItem({
       label: 'Логин',
-      value: 'ivanivanov',
+      value: this.props?.login,
     });
     this.children.firstName = new UserItem({
       label: 'Имя',
-      value: 'Иван',
+      value: this.props?.first_name,
     });
     this.children.secondName = new UserItem({
       label: 'Фамилия',
-      value: 'Иванов',
+      value: this.props?.second_name,
     });
     this.children.displayName = new UserItem({
       label: 'Имя в чате',
-      value: 'Иван',
+      value: this.props?.display_name
     });
     this.children.phone = new UserItem({
       label: 'Телефон',
-      value: '+7(090) 111 11 11',
+      value: this.props?.phone,
     });
-    this.children.editData = new LinkButton({
-      colorClass: 'color-default',
-      anchor: 'Изменить данные',
-      href: '/profile/edit/user',
+    this.children.editData = new Button({
+      value: 'Изменить данные',
+      type: 'button',
+      className: 'link-button color-default',
+      events: {
+        click: () => router.go(Routes.EditUser),
+      },
     });
-    this.children.editPassword = new LinkButton({
-      colorClass: 'color-default',
-      anchor: 'Изменить пароль',
-      href: '/profile/edit/password',
+    this.children.editPassword = new Button({
+      value: 'Изменить пароль',
+      type: 'button',
+      className: 'link-button color-default',
+      events: {
+        click: () => router.go(Routes.EditPassword),
+      },
     });
-    this.children.exit = new LinkButton({
-      colorClass: 'color-active',
-      anchor: 'Выйти',
-      href: '/chat',
+    this.children.exit = new Button({
+      value: 'Выйти',
+      type: 'button',
+      className: 'link-button color-active',
+      events: {
+        click: () => {
+          AuthController.logout();
+        }
+      }
     });
   }
-
+  
   render() {
-    const profileName = 'Иван';
+    const profileName = this.props.first_name;
     return this.compile(template, { ...this.props, styles, profileName });
   }
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+export const ProfilePage = withUser(ProfilePageBase);

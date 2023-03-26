@@ -1,13 +1,13 @@
-import { Block } from '../../utils/Block';
+import Block from '../../utils/Block';
 import template from './button.hbs';
 import styles from './button.scss';
 
 interface ButtonProps {
-  type: string;
-  value?: string;
-  className?: string;
+  type: string,
+  value?: string,
+  className?: string,
   events?: {
-    click: (e:Event) => void
+    click: (e:Event) => void,
   }
 }
 

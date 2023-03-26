@@ -67,17 +67,27 @@ const focusout = (event: Event): void => {
   validation(event);
 };
 
+const isValid = (inputs: any): boolean => {
+  // @ts-ignore
+  return Array.from(inputs).every((element: Element) => {
+    const inputElement = element as HTMLInputElement;
+    if(inputElement.name===undefined) { return true;  }
+    if(rulesForFields[inputElement.name]===undefined) {  return true; }
+    const { rule } = rulesForFields[inputElement.name];
+    if (!rule.test(inputElement.value)) { inputElement.value = '';  }
+    return rule.test(inputElement.value);
+  });
+};
+
 const submit = (event: Event): void => {
   event.preventDefault();
   const inputs = document.getElementsByTagName('input');
   const isTrue: boolean = Array.from(inputs).every((element: Element) => {
     const inputElement = element as HTMLInputElement;
+    if(inputElement.name===undefined) { return true;  }
+    if(rulesForFields[inputElement.name]===undefined) { return true;  }
     const { rule } = rulesForFields[inputElement.name];
-
-    if (!rule.test(inputElement.value)) {
-      inputElement.value = '';
-    }
-
+    if (!rule.test(inputElement.value)) { inputElement.value = ''; }
     return rule.test(inputElement.value);
   });
 
@@ -86,8 +96,7 @@ const submit = (event: Event): void => {
     Array.from(inputs).forEach((input) => {
       data[input.name] = input.value;
     });
-    console.log(data);
   }
 };
 
-export { focusin, focusout, submit };
+export { focusin, focusout, submit, isValid };

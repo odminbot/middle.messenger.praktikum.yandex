@@ -1,10 +1,13 @@
-import { Block } from '../../utils/Block';
+import Block from '../../utils/Block';
 import template from './login.hbs';
 import styles from './login.scss';
 import { Button } from '../../components/button';
-import { LinkButton } from '../../components/linkButton';
+import { Link } from '../../components/linkButton';
 import { Input } from '../../components/input';
-import { focusin, focusout, submit } from '../../utils/Validator';
+import { focusin, focusout, isValid } from '../../utils/Validator';
+import { SigninData } from '../../interfaces';
+import AuthController from '../../controllers/AuthController';
+import { Routes } from '../../interfaces/routes';
 
 export class LoginPage extends Block {
   constructor() {
@@ -37,16 +40,29 @@ export class LoginPage extends Block {
       type: 'submit',
       className: 'button',
       events: {
-        click: submit,
+        click: (e) => this.onSubmit(e),
       },
     });
-    this.children.linkButton = new LinkButton({
+    this.children.linkButton = new Link({
       colorClass: 'color-default',
       anchor: 'Зарегистрироваться',
-      href: '/registration',
+      href: Routes.Registration,
     });
   }
 
+  onSubmit(event: Event) {
+    event.preventDefault();
+    const inputs = document.getElementsByTagName('input');
+    const signInData = {};
+    if (isValid(inputs)) {
+      Array.from(inputs).forEach((input) => {
+        // @ts-ignore
+        signInData[input.name] = input.value;
+      });
+      AuthController.signin(signInData as SigninData);
+    }
+  }
+  
   render() {
     return this.compile(template, { ...this.props, styles });
   }

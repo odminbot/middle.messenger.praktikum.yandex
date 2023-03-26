@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+
+.chat_messages {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0;
+  line-height: 20px;
+  font-size: 12px;
+}
+
+.chat_input-block {
+  display: flex;
+  padding: 10px 0;
+  border-top: 1px solid $color_separation_line;
+  justify-content: space-between;
+  column-gap: 10px;
+}
+
+.chat_attach-button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: url("../../images/attach.svg") center / contain no-repeat;
+  cursor: pointer;
+  border-radius: 50%;
+
+  &:hover {
+    background-color: $color_field;
+  }
+}
+
+.chat_send-button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: url("../../images/arrow-right.svg") center / 60% no-repeat;
+  background-color: $color_link_button_default;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

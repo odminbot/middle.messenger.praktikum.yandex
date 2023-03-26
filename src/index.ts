@@ -3,46 +3,48 @@ import { RegistrationPage } from './pages/registration';
 import { ProfilePage } from './pages/profile';
 import { ProfileEditPasswordPage } from './pages/profile/edit/password';
 import { ProfileEditUserPage } from './pages/profile/edit/user';
-import { ChatPage } from './pages/chat';
-import { Error404 } from './pages/errors/404';
-import { Error500 } from './pages/errors/500';
-import { renderDom } from './utils/renderDom';
+import { ProfileEditAvatarPage } from './pages/profile/edit/avatar';
+import { ChatsPage } from './pages/chat';
+import Router  from './utils/Router';
+import AuthController from './controllers/AuthController';
+import { Routes } from './interfaces/routes';
+import store from './utils/Store';
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+  
+  Router
+    .use(Routes.Index, LoginPage)
+    .use(Routes.Registration, RegistrationPage)
+    .use(Routes.Profile, ProfilePage)
+    .use(Routes.EditPassword, ProfileEditPasswordPage)
+    .use(Routes.EditUser, ProfileEditUserPage)
+    .use(Routes.EditAvatar, ProfileEditAvatarPage)
+    .use(Routes.Chat, ChatsPage)
 
-  let page = new LoginPage();
-  const path: string = window.location.pathname;
+  let isProtectedRoute = true;
 
-  switch (path) {
-    case '/':
-      page = new LoginPage();
-      break;
-    case '/registration':
-      page = new RegistrationPage();
-      break;
-    case '/profile':
-      page = new ProfilePage();
-      break;
-    case '/profile/edit/password':
-      page = new ProfileEditPasswordPage();
-      break;
-    case '/profile/edit/user':
-      page = new ProfileEditUserPage();
-      break;
-    case '/chat':
-      page = new ChatPage();
-      break;
-    case '/500':
-      page = new Error500();
-      break;
-    case '/404':
-      page = new Error404();
-      break;
-    default:
-      page = new Error404();
+  switch (window.location.pathname) {
+    case Routes.Index:
+    case Routes.Registration:
+      isProtectedRoute = false;
       break;
   }
 
-  page.dispatchComponentDidMount();
-  renderDom('#app', page);
+  try {
+    await AuthController.fetchUser();
+    store.set('IsSigned', true);
+    Router.start();
+
+    if (!isProtectedRoute) {
+      Router.go(Routes.Chat)
+    }
+  } catch (e) {
+    store.set('IsSigned', false);
+    Router.start();
+
+    if (isProtectedRoute) {
+      Router.go(Routes.Index);
+    }
+  }
+
 });

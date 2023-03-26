@@ -1,0 +1,15 @@
+<div>
+  {{#if selectedChat }}  
+    <div class="chat_messages">
+       {{#each messages}}
+        {{{this}}}
+      {{/each}}
+    </div>
+    <div class="chat_input-block">
+      <button class="chat_attach-button"></button>
+      {{{ input }}}
+      <label class="error">{{error}}</label>
+      {{{ button }}}
+    </div>
+  {{/if}}
+</div>

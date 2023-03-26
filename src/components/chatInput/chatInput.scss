@@ -10,8 +10,36 @@
   border: none;
   background-color: $color_field;
   text-align: left;
+  outline: 1px solid $color_field;
 
   &:focus {
     outline: 1px solid $color_link_button_default;
+  }
+}
+
+.chat-input {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 12px;
+  padding: 7px 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: $color_field;
+  text-align: left;
+  margin-bottom: 0;
+  position: relative;
+  color: inherit;
+  outline: 1px solid $color_field;
+  
+  &_add-chat {
+    width:calc(100% - 92px);
+  }
+
+  &_add-user {
+    width:90px;
+  }
+
+  &:focus {
+    outline: 1px solid $color_text_light;
   }
 }

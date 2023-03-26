@@ -1,21 +1,58 @@
 import template from './editUser.hbs';
 import styles from '../../profile.scss';
-import { Block } from '../../../../utils/Block';
+import Block from '../../../../utils/Block';
 import { Input } from '../../../../components/input';
 import { Button } from '../../../../components/button';
-import { focusin, focusout, submit } from '../../../../utils/Validator';
+import { Avatar } from "../../../../components/avatar";
+import { focusin, focusout, isValid } from '../../../../utils/Validator';
+import router from '../../../../utils/Router';
+import { Routes } from '../../../../interfaces/routes';
+import UserController from '../../../../controllers/UserController';
+import { User } from '../../../../interfaces';
+import store from '../../../../utils/Store';
+import { withStore } from '../../../../utils/Store';
 
-export class ProfileEditUserPage extends Block {
-  constructor() {
-    super({});
-  }
+class ProfileEditUser extends Block {
 
   init() {
+
+    const userData = store.getState().user;
+
+    let avatar_style = '';
+    let avatar_class = '';
+    
+    if (this.props.avatar) { 
+      avatar_style = `background-image: url(${this.props.avatar})`; 
+      avatar_class = 'profile-container_user-pic';
+    }
+    else { 
+      avatar_style = '';  
+      avatar_class = 'profile-container_user-pic default_avatar';  
+    }
+        
+    this.children.avatar = new Avatar({
+      style: avatar_style,
+      class: avatar_class,
+      events: {
+        click: () => {
+          UserController.avatarEdit();
+        },
+      },
+    });
+
+    this.children.backButton = new Button({
+      value: '',
+      type: 'button',
+      className: 'send-button',
+      events: {
+        click: () => router.go(Routes.Chat),
+      },
+    });
     this.children.email = new Input({
       name: 'email',
       type: 'email',
       label: 'Email',
-      value: 'pochta@yandex.ru',
+      value: userData?.email,
       class: 'input-container',
       events: {
         focusin,
@@ -26,7 +63,7 @@ export class ProfileEditUserPage extends Block {
       name: 'login',
       type: 'text',
       label: 'Логин',
-      value: 'ivanivanov',
+      value: userData?.login,
       class: 'input-container',
       events: {
         focusin,
@@ -37,7 +74,7 @@ export class ProfileEditUserPage extends Block {
       name: 'first_name',
       type: 'text',
       label: 'Имя',
-      value: 'Иван',
+      value: userData?.first_name,
       class: 'input-container',
       events: {
         focusin,
@@ -48,7 +85,7 @@ export class ProfileEditUserPage extends Block {
       name: 'second_name',
       type: 'text',
       label: 'Фамилия',
-      value: 'Иванов',
+      value: userData?.second_name,
       class: 'input-container',
       events: {
         focusin,
@@ -59,7 +96,7 @@ export class ProfileEditUserPage extends Block {
       name: 'display_name',
       type: 'text',
       label: 'Имя в чате',
-      value: 'Иван',
+      value: userData?.display_name,
       class: 'input-container',
       events: {
         focusin,
@@ -70,7 +107,7 @@ export class ProfileEditUserPage extends Block {
       name: 'phone',
       type: 'text',
       label: 'Телефон',
-      value: '+7(090) 111 11 11',
+      value: userData?.phone,
       class: 'input-container',
       events: {
         focusin,
@@ -79,16 +116,33 @@ export class ProfileEditUserPage extends Block {
     });
     this.children.saveButton = new Button({
       value: 'Сохранить',
-      type: 'submit',
+      type: 'button',
       className: 'button',
       events: {
-        click: submit,
+        click: (e) => this.onSubmit(e),
       },
     });
   }
 
-  render() {
-    const profileName = 'Иван';
-    return this.compile(template, { ...this.props, styles, profileName });
+  onSubmit(event: Event) {
+    event.preventDefault();
+    const inputs = document.getElementsByTagName('input');
+    const updateUserData = {};
+    if (isValid(inputs)) {
+      Array.from(inputs).forEach((input) => {
+        // @ts-ignore
+        updateUserData[input.name] = input.value;
+      });
+
+      UserController.editUser(updateUserData as User);
+    }
   }
+
+  render() {
+    return this.compile(template, { ...this.props, styles });
+  }
+
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+export const ProfileEditUserPage = withUser(ProfileEditUser);

@@ -1,6 +1,6 @@
 import styles from './error.scss';
 import template from './error.hbs';
-import { Block } from '../../utils/Block';
+import Block from '../../utils/Block';
 
 interface Props {
   error: string

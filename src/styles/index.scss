@@ -11,13 +11,15 @@ body {
   color: $color_text_main;
   background: $color_background_main;
   box-sizing: border-box;
-  min-width:320px;
+  min-width:900px;
   max-width:1200px;
-  border-right: 1px solid $color_separation_line;
+  height: 100vh;
+  overflow-y:hidden;
 }
   
 main {
   height: 100vh;
+  overflow-y:hidden;
 }
 
 h1 {
@@ -28,25 +30,4 @@ h1 {
 
 .color_active {
   color: $color_link_button_active;
-}
-
-nav {
-    position: absolute;
-    left: 450px;
-    top: 4px;
-    text-align: center;
-}
-
-.page-menu {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-.page-menu li {
-  display: inline;  
-  margin-top: 15px;
-  margin-left: 20px;
 }

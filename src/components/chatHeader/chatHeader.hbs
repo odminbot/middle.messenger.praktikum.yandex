@@ -1,0 +1,27 @@
+<div class="headers">
+  {{#if selectedChat}}
+    <div class="chat-header">
+      <h1>{{selectedChatTitle}}</h1>
+      {{#if users}}
+        <div class="chat-header_users">
+          Пользователи:
+          {{#each users}}
+            {{login}} |
+          {{/each}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="chat-header">
+      <div>
+        {{{inputUserLogin}}}
+        {{{buttonAddUser}}}
+        {{{buttonRemoveUser}}}
+      </div>
+      <div>
+        {{{buttonRemoveChat}}}
+      </div>
+    </div>
+  {{else}}
+    <div class="chat-header_no-chat">&lt; Выберите чат...  </div>
+  {{/if}}
+</div>
