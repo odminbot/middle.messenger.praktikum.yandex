@@ -4,21 +4,22 @@ import Router from '../../utils/Router';
 import sinon from 'sinon';
 
 describe('Link', () => {
+  
   it('should render', () => {
-    new Link({ to: '/' });
+    new Link({ href: '/' });
   });
 
-  it('element should return span', () => {
-    const link = new Link({ to: '/' });
+  it('element should return a', () => {
+    const link = new Link({ href: '/' });
     const element = link.element;
 
-    expect(element).to.be.instanceof(window.HTMLSpanElement)
+    expect(element).to.be.instanceof(window.HTMLAnchorElement)
   });
 
   it('should go to passed route on click', () => {
-    const link = new Link({ to: '/' });
+    const link = new Link({ href: '/' });
     const spy = sinon.spy(Router, 'go');
-    const element = link.element as HTMLSpanElement;
+    const element = link.element as HTMLAnchorElement;
 
     element.click();
 

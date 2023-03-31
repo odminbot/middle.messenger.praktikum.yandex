@@ -1,7 +1,7 @@
 import Block from './Block';
 import { Error404 } from '../pages/errors/404';
 
-export interface BlockConstructable<P = any> {
+export interface BlockConstructable<P extends Record<string, any> = any> {
   new(props: P): Block<P>;
 }
 
