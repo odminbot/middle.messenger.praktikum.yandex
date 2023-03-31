@@ -1,5 +1,5 @@
 import {nanoid} from 'nanoid';
-import EventBus from './EventBus';
+import { EventBus } from './EventBus';
 import isEqual from './helpers';
 
 class Block<P extends Record<string, any> = any> {
@@ -76,7 +76,7 @@ class Block<P extends Record<string, any> = any> {
   }
 
   protected init() {
-    return;
+    //return;
   }
 
   private _componentDidMount() {
@@ -107,6 +107,7 @@ class Block<P extends Record<string, any> = any> {
 
   protected componentDidUpdate(oldProps: P, newProps: P) {
     return !isEqual(oldProps, newProps);
+    //return true;
   }
 
   public setProps = (nextProps: Partial<P>) => {
@@ -162,6 +163,7 @@ class Block<P extends Record<string, any> = any> {
       component.getContent()?.append(...Array.from(stub.childNodes));
 
       stub.replaceWith(component.getContent() ?? '');
+      //stub.replaceWith(component.getContent()!);
     }
 
     Object.entries(this.children).forEach(([_, component]) => {

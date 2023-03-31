@@ -3,13 +3,13 @@ import { expect } from 'chai';
 import Router from '../../utils/Router';
 import sinon from 'sinon';
 
-describe('Link', () => {
+describe('LinkButton Component', () => {
   
   it('should render', () => {
     new Link({ href: '/' });
   });
 
-  it('element should return a', () => {
+  it('element should return anchor', () => {
     const link = new Link({ href: '/' });
     const element = link.element;
 
