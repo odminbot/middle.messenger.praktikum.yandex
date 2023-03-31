@@ -9,6 +9,7 @@ import Router  from './utils/Router';
 import AuthController from './controllers/AuthController';
 import { Routes } from './interfaces/routes';
 import store from './utils/Store';
+import './styles/index.scss';
 
 window.addEventListener('DOMContentLoaded', async () => {
   

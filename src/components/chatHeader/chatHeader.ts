@@ -81,4 +81,5 @@ const withUsers = withStore((state) => ({
   selectedChatTitle: state.selectedChatTitle,
 }));
 
+//@ts-ignore
 export const ChatHeader = withUsers(ChatHeaderBase);

@@ -100,4 +100,5 @@ const withSelectedChatCore = withStore(state => {
   };
 });
 
+//@ts-ignore
 export const ChatCore = withSelectedChatCore(ChatCoreBase);

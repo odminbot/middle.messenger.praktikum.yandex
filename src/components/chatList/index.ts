@@ -43,4 +43,5 @@ class ChatListBase extends Block<ChatListProps> {
 }
 
 const withChats = withStore((state) => ({chats: [...(state.chats || [])]}));
+//@ts-ignore
 export const ChatList = withChats(ChatListBase);
