@@ -1,0 +1,33 @@
+// Main
+@import './styles/normalize';
+@import './styles/variables';
+@import './styles/reset';
+
+body {
+  display: block;
+  margin: 0;
+  font-family: Inter, Tahoma, Arial, sans-serif;
+  font-size: 14px;
+  color: $color_text_main;
+  background: $color_background_main;
+  box-sizing: border-box;
+  min-width:900px;
+  max-width:1200px;
+  height: 100vh;
+  overflow-y:hidden;
+}
+  
+main {
+  height: 100vh;
+  overflow-y:hidden;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.color_active {
+  color: $color_link_button_active;
+}
