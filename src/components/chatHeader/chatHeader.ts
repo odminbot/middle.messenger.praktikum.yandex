@@ -1,11 +1,11 @@
-import Block from "../../utils/Block";
-import template from "./chatHeader.hbs";
-import styles from "./chatHeader.scss";
-import { withStore } from "../../utils/Store";
-import { User } from "../../interfaces";
+import Block from '../../utils/Block';
+import template from './chatHeader.hbs';
+import styles from './chatHeader.scss';
+import { withStore } from '../../utils/Store';
+import { User } from '../../interfaces';
 import { Button } from '../button';
 import { ChatInput } from '../chatInput';
-import ChatsController from "../../controllers/ChatController";
+import ChatsController from '../../controllers/ChatController';
 
 interface ChatHeaderProps {
   users: User[],
@@ -14,12 +14,10 @@ interface ChatHeaderProps {
 }
 
 class ChatHeaderBase extends Block<ChatHeaderProps> {
-
   protected init() {
-
     this.children.buttonRemoveChat = new Button({
-      value: "Удалить чат",
-      className: "chat-button activ",
+      value: 'Удалить чат',
+      className: 'chat-button activ',
       type: 'button',
       events: {
         click: () => {
@@ -44,14 +42,13 @@ class ChatHeaderBase extends Block<ChatHeaderProps> {
     });
 
     this.children.buttonRemoveUser = new Button({
-      value: "Удалить Пользователя",
+      value: 'Удалить Пользователя',
       type: 'button',
-      className: "chat-button activ",
+      className: 'chat-button activ',
       events: {
         click: () => this.deleteUser(),
       },
     });
-
   }
 
   addUser() {
@@ -71,15 +68,15 @@ class ChatHeaderBase extends Block<ChatHeaderProps> {
   }
 
   protected render(): DocumentFragment {
-    return this.compile(template, {...this.props, styles});
+    return this.compile(template, { ...this.props, styles });
   }
 }
 
 const withUsers = withStore((state) => ({
-  users: state.users, 
+  users: state.users,
   selectedChat: state.selectedChat,
   selectedChatTitle: state.selectedChatTitle,
 }));
 
-//@ts-ignore
+// @ts-ignore
 export const ChatHeader = withUsers(ChatHeaderBase);

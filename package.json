@@ -8,6 +8,8 @@
     "serve": "webpack serve",
     "stylelint": "stylelint '**/*{.css,.scss}'",
     "stylelint:fix": "stylelint '**/*{.css,.scss}' --fix",
+    "eslint": "eslint './src/**/*{.ts,.js}'",
+    "eslint:fix": "eslint './src/**/*{.ts,.js}' --fix",
     "test": "mocha --require ts-node/register --require ./mochaSetup.js './src/**/*.test.ts'",
     "parcel:dev": "parcel ./src/index.html --no-cache --open",
     "parcel:build": "parcel build ./src/index.html --no-cache",
@@ -60,7 +62,7 @@
   "dependencies": {
     "express": "4.18.2",
     "express-history-api-fallback": "2.2.1",
-    "nanoid": "3",
-    "husky": "8.0.3"
+    "husky": "8.0.3",
+    "nanoid": "3"
   }
 }

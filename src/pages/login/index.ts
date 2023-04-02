@@ -62,7 +62,7 @@ export class LoginPage extends Block {
       AuthController.signin(signInData as SigninData);
     }
   }
-  
+
   render() {
     return this.compile(template, { ...this.props, styles });
   }

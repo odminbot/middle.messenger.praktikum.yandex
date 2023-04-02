@@ -53,9 +53,11 @@ const validation = (event: Event): void => {
   const isTrue: boolean = rule.test(target.value);
 
   if (isTrue) {
-      error!.textContent = '';
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    error!.textContent = '';
   } else {
-      error!.textContent = rulesForFields[target.name].message;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    error!.textContent = rulesForFields[target.name].message;
   }
 };
 
@@ -67,25 +69,23 @@ const focusout = (event: Event): void => {
   validation(event);
 };
 
-const isValid = (inputs: any): boolean => {
+const isValid = (inputs: any): boolean =>
   // @ts-ignore
-  return Array.from(inputs).every((element: Element) => {
+  Array.from(inputs).every((element: Element) => {
     const inputElement = element as HTMLInputElement;
-    if(inputElement.name===undefined) { return true;  }
-    if(rulesForFields[inputElement.name]===undefined) {  return true; }
+    if (inputElement.name === undefined) { return true; }
+    if (rulesForFields[inputElement.name] === undefined) { return true; }
     const { rule } = rulesForFields[inputElement.name];
-    if (!rule.test(inputElement.value)) { inputElement.value = '';  }
+    if (!rule.test(inputElement.value)) { inputElement.value = ''; }
     return rule.test(inputElement.value);
   });
-};
-
 const submit = (event: Event): void => {
   event.preventDefault();
   const inputs = document.getElementsByTagName('input');
   const isTrue: boolean = Array.from(inputs).every((element: Element) => {
     const inputElement = element as HTMLInputElement;
-    if(inputElement.name===undefined) { return true;  }
-    if(rulesForFields[inputElement.name]===undefined) { return true;  }
+    if (inputElement.name === undefined) { return true; }
+    if (rulesForFields[inputElement.name] === undefined) { return true; }
     const { rule } = rulesForFields[inputElement.name];
     if (!rule.test(inputElement.value)) { inputElement.value = ''; }
     return rule.test(inputElement.value);
@@ -99,4 +99,6 @@ const submit = (event: Event): void => {
   }
 };
 
-export { focusin, focusout, submit, isValid };
+export {
+  focusin, focusout, submit, isValid,
+};

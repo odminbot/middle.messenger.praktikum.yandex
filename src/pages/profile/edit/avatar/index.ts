@@ -21,7 +21,6 @@ export class EditAvatar extends Block<any> {
   }
 
   init() {
-    
     this.children.saveButton = new Button({
       type: 'button',
       value: 'Поменять',
@@ -44,6 +43,7 @@ export class EditAvatar extends Block<any> {
       },
     });
   }
+
   render() {
     return this.compile(template, { ...this.props, styles });
   }

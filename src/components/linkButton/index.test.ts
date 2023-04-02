@@ -1,19 +1,18 @@
-import { Link } from './index';
 import { expect } from 'chai';
-import Router from '../../utils/Router';
 import sinon from 'sinon';
+import { Link } from './index';
+import Router from '../../utils/Router';
 
 describe('LinkButton Component', () => {
-  
   it('should render', () => {
     new Link({ href: '/' });
   });
 
   it('element should return anchor', () => {
     const link = new Link({ href: '/' });
-    const element = link.element;
+    const { element } = link;
 
-    expect(element).to.be.instanceof(window.HTMLAnchorElement)
+    expect(element).to.be.instanceof(window.HTMLAnchorElement);
   });
 
   it('should go to passed route on click', () => {

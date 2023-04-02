@@ -14,7 +14,6 @@ interface Props {
   };
 }
 
-
 export class ChatInput extends Block {
   constructor(props: Props) {
     super(props);

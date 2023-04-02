@@ -7,43 +7,44 @@ type PlainObject<T = any> = {
 
 function isArray(value: unknown): value is [] {
   return Array.isArray(value);
-} 
+}
 
 function isPlainObject(value: unknown): value is PlainObject {
   return typeof value === 'object'
     && value !== null
     && value.constructor === Object
     && Object.prototype.toString.call(value) === '[object Object]';
-} 
+}
 
 function isArrayOrObject(value: unknown): value is ([] | PlainObject) {
   return isPlainObject(value) || isArray(value);
-} 
+}
 
 function isEqual(lhs: PlainObject, rhs: PlainObject) {
   if (Object.keys(lhs).length !== Object.keys(rhs).length) {
-      return false;
+    return false;
   }
 
   for (const [key, value] of Object.entries(lhs)) {
-      const rightValue = rhs[key];
-      if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-          if (isEqual(value, rightValue)) {
-              continue;
-          }
-          return false;
+    const rightValue = rhs[key];
+    if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
+      if (isEqual(value, rightValue)) {
+        continue;
       }
+      return false;
+    }
 
-      if (value !== rightValue) {
-          return false;
-      }
+    if (value !== rightValue) {
+      return false;
+    }
   }
 
   return true;
 }
 
 export function merge(lhs: Indexed, rhs: Indexed): Indexed {
-  for (let p in rhs) {
+  for (const p in rhs) {
+    // eslint-disable-next-line no-prototype-builtins
     if (!rhs.hasOwnProperty(p)) {
       continue;
     }
@@ -78,4 +79,4 @@ export function set(object: Indexed | unknown, path: string, value: unknown): In
   return merge(object as Indexed, result);
 }
 
-export default isEqual
+export default isEqual;

@@ -49,7 +49,7 @@ export class AuthController {
       console.error(e.message);
     }
   }
-  
+
   async back() {
     try {
       router.back();
@@ -57,7 +57,7 @@ export class AuthController {
       console.error(e.message);
     }
   }
-  
+
   async forward() {
     try {
       router.forward();
@@ -65,7 +65,6 @@ export class AuthController {
       console.error(e.message);
     }
   }
-
 }
 
 export default new AuthController();

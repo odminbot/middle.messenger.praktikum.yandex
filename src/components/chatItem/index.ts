@@ -26,24 +26,23 @@ class ChatItemBase extends Block<ChatItemProps> {
   }
 
   render() {
-   
     let text = '';
     let avatar_style = '';
     let time = '';
-    
+
     if (this.props.last_message?.content) {
       time = timeDateMessage(this.props.last_message?.time);
       const maxLength = 40;
       text = this.props.last_message?.content.length > maxLength ? `${this.props.last_message?.content.slice(0, maxLength)}...` : text;
-    }  
-
-    if (this.props.avatar) { 
-      avatar_style = `background-image: url(https://ya-praktikum.tech/api/v2/resources${this.props.avatar})`; 
     }
-        
+
+    if (this.props.avatar) {
+      avatar_style = `background-image: url(https://ya-praktikum.tech/api/v2/resources${this.props.avatar})`;
+    }
+
     return this.compile(template, {
       ...this.props,
-      time: time,
+      time,
       last_message: text,
       avatar: avatar_style,
       unread_count: this.props.unread_count,
@@ -53,7 +52,7 @@ class ChatItemBase extends Block<ChatItemProps> {
   }
 }
 
-const withSelectedChat = withStore((state) => ({selectedChat: (state.chats || []).find(({id}) => id === state.selectedChat)}));
+const withSelectedChat = withStore((state) => ({ selectedChat: (state.chats || []).find(({ id }) => id === state.selectedChat) }));
 
-//@ts-ignore
+// @ts-ignore
 export const ChatItem = withSelectedChat(ChatItemBase);

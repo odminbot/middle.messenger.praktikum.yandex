@@ -3,17 +3,17 @@ import styles from './profile.scss';
 import Block from '../../utils/Block';
 import { UserItem } from '../../components/userItem';
 import { Button } from '../../components/button';
-import { Avatar } from "../../components/avatar";
+import { Avatar } from '../../components/avatar';
 import { withStore } from '../../utils/Store';
 import AuthController from '../../controllers/AuthController';
-import UserController from "../../controllers/UserController";
+import UserController from '../../controllers/UserController';
 import router from '../../utils/Router';
 import { Routes } from '../../interfaces/routes';
 
 class ProfilePageBase extends Block {
   init() {
     AuthController.fetchUser();
- 
+
     this.children.backButton = new Button({
       value: '',
       type: 'button',
@@ -25,16 +25,15 @@ class ProfilePageBase extends Block {
 
     let avatar_style = '';
     let avatar_class = '';
-    
-    if (this.props.avatar) { 
-      avatar_style = `background-image: url(${this.props.avatar})`; 
+
+    if (this.props.avatar) {
+      avatar_style = `background-image: url(${this.props.avatar})`;
       avatar_class = 'profile-container_user-pic';
+    } else {
+      avatar_style = '';
+      avatar_class = 'profile-container_user-pic default_avatar';
     }
-    else { 
-      avatar_style = '';  
-      avatar_class = 'profile-container_user-pic default_avatar';  
-    }
-        
+
     this.children.avatar = new Avatar({
       style: avatar_style,
       class: avatar_class,
@@ -62,7 +61,7 @@ class ProfilePageBase extends Block {
     });
     this.children.displayName = new UserItem({
       label: 'Имя в чате',
-      value: this.props?.display_name
+      value: this.props?.display_name,
     });
     this.children.phone = new UserItem({
       label: 'Телефон',
@@ -91,16 +90,16 @@ class ProfilePageBase extends Block {
       events: {
         click: () => {
           AuthController.logout();
-        }
-      }
+        },
+      },
     });
   }
-  
+
   render() {
     const profileName = this.props.first_name;
     return this.compile(template, { ...this.props, styles, profileName });
   }
 }
 
-const withUser = withStore((state) => ({ ...state.user }))
+const withUser = withStore((state) => ({ ...state.user }));
 export const ProfilePage = withUser(ProfilePageBase);

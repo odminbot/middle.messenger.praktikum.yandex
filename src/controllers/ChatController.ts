@@ -1,6 +1,6 @@
-import API, { ChatAPI } from "../api/ChatAPI";
-import { TypesUsersChat, TitleChat } from '../interfaces/';
-import store from "../utils/Store";
+import API, { ChatAPI } from '../api/ChatAPI';
+import { TypesUsersChat, TitleChat } from '../interfaces';
+import store from '../utils/Store';
 import MessagesController from './MessagesController';
 import UserController from './UserController';
 
@@ -47,9 +47,9 @@ class ChatController {
   async deleteChat(id: number) {
     try {
       await this.api.deleteChat(id);
-      store.set("token", undefined);
-      store.set("selectedChat", undefined);
-      store.set("users", undefined);
+      store.set('token', undefined);
+      store.set('selectedChat', undefined);
+      store.set('users', undefined);
       await this.getChats();
     } catch (e: unknown) {
       console.error(e);
@@ -61,7 +61,6 @@ class ChatController {
       await this.api.addUserToChat(data);
       await this.getChats();
       await this.getUsers(currentChat);
-
     } catch (e: unknown) {
       console.error(e);
     }
@@ -72,19 +71,18 @@ class ChatController {
       await this.api.deleteUserFromChat(data);
       await this.getChats();
       await this.getUsers(currentChat);
-
     } catch (e: unknown) {
       console.error(e);
     }
   }
-  
+
   async addUserByLogin(login: string) {
     try {
       const currentChat = store.getState().selectedChat;
       if (currentChat) {
         const userId = await UserController.getIdByLogin(login);
         if (userId) {
-          await this.addUser({ users: [userId], chatId: currentChat}, currentChat);
+          await this.addUser({ users: [userId], chatId: currentChat }, currentChat);
         }
       }
     } catch (e: unknown) {
@@ -98,7 +96,7 @@ class ChatController {
       if (currentChat) {
         const userId = await UserController.getIdByLogin(login);
         if (userId) {
-          await this.deleteUser({ users: [userId], chatId:currentChat}, currentChat);
+          await this.deleteUser({ users: [userId], chatId: currentChat }, currentChat);
         }
       }
     } catch (e: unknown) {

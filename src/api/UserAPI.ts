@@ -15,7 +15,7 @@ export class UserAPI extends BaseAPI {
   }
 
   public searchUser(login: string) {
-    return this.http.post('/search',  { login: login });
+    return this.http.post('/search', { login });
   }
 
   public changePassword(data: EditPassword) {
@@ -27,12 +27,15 @@ export class UserAPI extends BaseAPI {
   }
 
   search(login: string): Promise<User[]> {
-    return this.http.post('/search', {login});
+    return this.http.post('/search', { login });
   }
 
   create = undefined;
+
   update = undefined;
+
   delete = undefined;
+
   read = undefined;
 }
 
