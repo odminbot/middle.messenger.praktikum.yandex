@@ -25,9 +25,9 @@ npm run start
 
 ## Deploy
 
-[Deploy Netlify 3 sprint](https://bright-hummingbird-dbf925.netlify.app/)
+[Netlify 3 sprint](https://bright-hummingbird-dbf925.netlify.app/)
 
-[Deploy 4 sprint](https://)
+[Render.com 4 sprint](https://chat-messenger-educational-project.onrender.com)
 
 
 ## Pull Requests
