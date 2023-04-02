@@ -6,16 +6,15 @@ import { Button } from '../../components/button';
 import router from '../../utils/Router';
 import { Routes } from '../../interfaces/routes';
 import ChatsController from '../../controllers/ChatController';
-import { ChatList } from '../../components/chatList/';
+import { ChatList } from '../../components/chatList';
 import { ChatCore } from '../../components/chatCore';
 import { ChatHeader } from '../../components/chatHeader/chatHeader';
 
 export class ChatsPage extends Block {
-  
   constructor() {
     super({});
   }
-  
+
   init() {
     this.children.profile = new Button({
       value: 'Профиль >',
@@ -23,19 +22,19 @@ export class ChatsPage extends Block {
       className: 'link-button chat_profile-link',
       events: {
         click: () => {
-          router.go(Routes.Profile)
+          router.go(Routes.Profile);
         },
-      }
+      },
     });
 
-    this.children.chatList = new ChatList({chats: [], isLoaded: false});
-    this.children.header = new ChatHeader({users: [], selectedChat:0 });
+    this.children.chatList = new ChatList({ chats: [], isLoaded: false });
+    this.children.header = new ChatHeader({ users: [], selectedChat: 0 });
     this.children.chatCore = new ChatCore({});
 
     ChatsController.getChats().finally(() => {
       (this.children.chatList as Block).setProps({
-        isLoaded: true
-      })
+        isLoaded: true,
+      });
     });
 
     this.children.inputChatName = new ChatInput({
@@ -45,26 +44,25 @@ export class ChatsPage extends Block {
     });
 
     this.children.buttonAddChat = new Button({
-      value: "Добавить",
+      value: 'Добавить',
       type: 'button',
-      className: "chat-button",
+      className: 'chat-button',
       events: {
         click: () => this.addNewChat(),
-        }
+      },
     });
-
   }
 
   addNewChat() {
     const input = this.children.inputChatName as ChatInput;
     const title = input.getValue();
-    const data = { "title": title }; 
+    const data = { title };
     if (title) {
       ChatsController.createChat(data);
     }
   }
 
   render() {
-    return this.compile(template, {...this.props, styles});
+    return this.compile(template, { ...this.props, styles });
   }
 }

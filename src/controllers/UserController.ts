@@ -1,12 +1,12 @@
 import API, { UserAPI } from '../api/UserAPI';
 import { EditPassword, User } from '../interfaces';
 import AuthController from './AuthController';
-import router from "../utils/Router";
+import router from '../utils/Router';
 import { Routes } from '../interfaces/routes';
 
 export class UserController {
   private readonly api: UserAPI;
-  
+
   constructor() {
     this.api = API;
   }
@@ -33,7 +33,7 @@ export class UserController {
     try {
       const changedData = await this.api.changeProfile(data);
       if (changedData) {
-        await AuthController.fetchUser(); 
+        await AuthController.fetchUser();
         router.go(Routes.Profile);
       }
     } catch (e: any) {
@@ -54,7 +54,7 @@ export class UserController {
     try {
       const users = await this.api.search(login);
 
-      const user = users.find((u) => u.login === login)
+      const user = users.find((u) => u.login === login);
 
       if (!user) {
         return null;

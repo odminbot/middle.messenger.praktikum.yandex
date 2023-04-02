@@ -1,7 +1,7 @@
 import Block from './Block';
 import { Error404 } from '../pages/errors/404';
 
-export interface BlockConstructable<P = any> {
+export interface BlockConstructable<P extends Record<string, any> = any> {
   new(props: P): Block<P>;
 }
 
@@ -18,18 +18,19 @@ function render(query: string, block: Block) {
 
   root.innerHTML = '';
 
-  root.append(block.getContent()!);
+  root.append(block?.getContent() ?? '');
 
   return root;
 }
 
 class Route {
   private block: Block | null = null;
-  
+
   constructor(
     private pathname: string,
     private readonly blockClass: BlockConstructable,
-    private readonly query: string) {
+    private readonly query: string,
+  ) {
   }
 
   leave() {
@@ -45,15 +46,17 @@ class Route {
       this.block = new this.blockClass({});
 
       render(this.query, this.block);
-      return;
     }
   }
 }
 
 export class Router {
   private static __instance: Router;
+
   private routes: Route[] = [];
+
   private currentRoute: Route | null = null;
+
   private history = window.history;
 
   constructor(private readonly rootQuery: string) {
@@ -92,7 +95,7 @@ export class Router {
       const target = event.currentTarget as Window;
 
       this._onRoute(target.location.pathname);
-    }
+    };
 
     this._onRoute(window.location.pathname);
   }
@@ -101,7 +104,7 @@ export class Router {
     const route = this.getRoute(pathname);
 
     if (!route) {
-      const errorPage = new Route("/404", Error404, this.rootQuery);
+      const errorPage = new Route('/404', Error404, this.rootQuery);
       errorPage.render();
       return;
     }
@@ -116,7 +119,7 @@ export class Router {
   }
 
   private getRoute(pathname: string) {
-    return this.routes.find(route => route.match(pathname));
+    return this.routes.find((route) => route.match(pathname));
   }
 }
 

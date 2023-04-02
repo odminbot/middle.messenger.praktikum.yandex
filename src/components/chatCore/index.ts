@@ -1,4 +1,4 @@
-import MessagesController, {Message as MessageInfo} from '../../controllers/MessagesController';
+import MessagesController, { Message as MessageInfo } from '../../controllers/MessagesController';
 import Block from '../../utils/Block';
 import { ChatInput } from '../chatInput';
 import { Button } from '../button';
@@ -21,7 +21,6 @@ class ChatCoreBase extends Block<ChatCoreProps> {
   }
 
   protected init() {
-
     this.children.messages = this.createMessages(this.props);
 
     this.children.input = new ChatInput({
@@ -31,18 +30,18 @@ class ChatCoreBase extends Block<ChatCoreProps> {
       id: 'message',
       events: {
         keyup: (e:KeyboardEvent) => {
-          if (e.key === 'Enter'  || e.code === 'NumpadEnter') {
-            const input: any = document.querySelector("#message");
+          if (e.key === 'Enter' || e.code === 'NumpadEnter') {
+            const input: any = document.querySelector('#message');
             const inputMessage = this.children.input as ChatInput;
             const message = inputMessage.getValue();
 
-            if (message !== "") {
-              MessagesController.sendMessage(this.props.selectedChat!, message);
-              input.value = "";
+            if (message !== '' && this.props.selectedChat) {
+              MessagesController.sendMessage(this.props.selectedChat, message);
+              input.value = '';
             }
           }
         },
-      }
+      },
     });
 
     this.children.button = new Button({
@@ -57,9 +56,8 @@ class ChatCoreBase extends Block<ChatCoreProps> {
             MessagesController.sendMessage(this.props.selectedChat, message);
           }
         },
-      }
+      },
     });
-
   }
 
   protected componentDidUpdate(oldProps: ChatCoreProps, newProps: ChatCoreProps): boolean {
@@ -72,9 +70,7 @@ class ChatCoreBase extends Block<ChatCoreProps> {
   }
 
   private createMessages(props: ChatCoreProps) {
-    return props.messages.map(data => {
-      return new ChatMessage({...data, time: timeDateMessage(data.time), isMine: props.userId === data.user_id });
-    });
+    return props.messages.map((data) => new ChatMessage({ ...data, time: timeDateMessage(data.time), isMine: props.userId === data.user_id }));
   }
 
   protected render(): DocumentFragment {
@@ -82,7 +78,7 @@ class ChatCoreBase extends Block<ChatCoreProps> {
   }
 }
 
-const withSelectedChatCore = withStore(state => {
+const withSelectedChatCore = withStore((state) => {
   const selectedChatId = state.selectedChat;
 
   if (!selectedChatId) {
@@ -100,4 +96,5 @@ const withSelectedChatCore = withStore(state => {
   };
 });
 
+// @ts-ignore
 export const ChatCore = withSelectedChatCore(ChatCoreBase);

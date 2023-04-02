@@ -1,5 +1,8 @@
-{
-    "compilerOptions": {
+{   
+  "ts-node": {
+    "files": true
+  },
+  "compilerOptions": {
     "target": "ES2019",
     "module": "commonjs",
     "sourceMap": true,
@@ -10,6 +13,10 @@
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": [
+      "ESNext",
+      "DOM"
+    ]
   }
 }

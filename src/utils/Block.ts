@@ -1,5 +1,5 @@
-import {nanoid} from 'nanoid';
-import EventBus from './EventBus';
+import { nanoid } from 'nanoid';
+import { EventBus } from './EventBus';
 import isEqual from './helpers';
 
 class Block<P extends Record<string, any> = any> {
@@ -11,9 +11,13 @@ class Block<P extends Record<string, any> = any> {
   } as const;
 
   public id = nanoid(6);
+
   protected props: P;
+
   public children: Record<string, Block | Block[]>;
+
   private eventBus: () => EventBus;
+
   private _element: HTMLElement | null = null;
 
   /** JSDoc
@@ -24,8 +28,8 @@ class Block<P extends Record<string, any> = any> {
    */
   constructor(propsWithChildren: P) {
     const eventBus = new EventBus();
-    
-    const {props, children} = this._getChildrenAndProps(propsWithChildren);
+
+    const { props, children } = this._getChildrenAndProps(propsWithChildren);
 
     this.children = children;
     this.props = this._makePropsProxy(props);
@@ -42,7 +46,7 @@ class Block<P extends Record<string, any> = any> {
     const children: Record<string, Block | Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
-      if (Array.isArray(value) && value.length > 0 && value.every(v => v instanceof Block)) {
+      if (Array.isArray(value) && value.length > 0 && value.every((v) => v instanceof Block)) {
         children[key as string] = value;
       } else if (value instanceof Block) {
         children[key as string] = value;
@@ -51,11 +55,11 @@ class Block<P extends Record<string, any> = any> {
       }
     });
 
-    return {props: props as P, children};
+    return { props: props as P, children };
   }
 
   private _addEvents() {
-    const {events = {}} = this.props as P & { events: Record<string, () => void> };
+    const { events = {} } = this.props as P & { events: Record<string, () => void> };
 
     Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
@@ -90,9 +94,9 @@ class Block<P extends Record<string, any> = any> {
   public dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       if (Array.isArray(child)) {
-        child.forEach(ch => ch.dispatchComponentDidMount());
+        child.forEach((ch) => ch.dispatchComponentDidMount());
       } else {
         child.dispatchComponentDidMount();
       }
@@ -136,11 +140,11 @@ class Block<P extends Record<string, any> = any> {
   }
 
   protected compile(template: (context: any) => string, context: any) {
-    const contextAndStubs = {...context};
+    const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, component]) => {
       if (Array.isArray(component)) {
-        contextAndStubs[name] = component.map(child => `<div data-id="${child.id}"></div>`)
+        contextAndStubs[name] = component.map((child) => `<div data-id="${child.id}"></div>`);
       } else {
         contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
       }
@@ -162,8 +166,10 @@ class Block<P extends Record<string, any> = any> {
       component.getContent()?.append(...Array.from(stub.childNodes));
 
       stub.replaceWith(component.getContent() ?? '');
-    }
-
+      // stub.replaceWith(component.getContent()!);
+    };
+    
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(this.children).forEach(([_, component]) => {
       if (Array.isArray(component)) {
         component.forEach(replaceStub);
@@ -184,7 +190,7 @@ class Block<P extends Record<string, any> = any> {
   }
 
   private _makePropsProxy(props: P) {
-
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     return new Proxy(props, {
@@ -193,7 +199,7 @@ class Block<P extends Record<string, any> = any> {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target, prop: string, value) {
-        const oldTarget = {...target};
+        const oldTarget = { ...target };
 
         target[prop as keyof P] = value;
 
